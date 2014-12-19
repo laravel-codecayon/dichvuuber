@@ -235,7 +235,17 @@ return array(
 
 	"permission_note_success"	=> "Phân quyền thành công !",
 	"fullname"					=> "Họ tên ",
+
 	"table_type_customer"		=> "Loại KH ",
 	"customer_type_enable"		=> "VIP ",
 	"customer_type_disable"		=> "Bình thường ",
+	"customer_name"				=> "Tên khách hàng ",
+	"customer"					=> "Khách hàng ",
+	"phone"						=> "Điện thoại ",
+	"address"					=> "Địa chỉ ",
+	"city"						=> "Tỉnh/Thành ",
+	"district"					=> "Quận/Huyện ",
+	"ward"						=> "Phường/Xã",
+	"customer_status"			=> "Trạng thái ",
+	"customer_type"				=> "Loại khách hàng ",
 );

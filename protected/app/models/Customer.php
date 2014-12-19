@@ -22,6 +22,19 @@ class Customer extends BaseModel  {
 	public static function queryGroup(){
 		return "  ";
 	}
+
+	public static $rules=array(
+			"username" => "required|alpha_num|between:5,15|unique:customer",
+			"name" => "required|alpha_num|between:5,15",
+			"phone" => "required|Numeric",
+			"email" => "required|email|unique:customer",
+			"password" => "required|alpha_num|between:5,20",
+			"repassword" => "required|alpha_num|same:password",
+			"address" => "required",
+			"provinceid" => "required",
+			"districtid" => "required",
+			"wardid" => "required",
+		);
 	
 	public function columnTable(){
 		$array = array(

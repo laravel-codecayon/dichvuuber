@@ -28,12 +28,62 @@ class HomeController extends BaseController {
 		$this->data['pageTitle'] = "Đăng ký";
 		$this->data['pageNote'] = CNF_APPNAME;
 
+		$input = array(
+				'username'	=>'',
+				'name'	=>'',
+				'sex'	=>'1',
+				'phone'	=>'',
+				'email'	=>'',
+				'address'	=>'',
+				'provinceid'	=>'79',
+				'districtid'	=>'',
+				'wardid'	=>'',
+			);
+		if(Session::has('input_rd')){
+			$input = Session::get('input_rd');
+		}
+		$data['input'] = $input;
+
 		//$this->data['breadcrumb'] = 'inactive';
 		$page = 'pages.template.dangky';
 
 
 		$page = SiteHelpers::renderHtml($page);
-		$this->layout->nest('content',$page)->with('page', $this->data)->with('menu','dangky');
+		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','dangky');
+	}
+
+	public function postDangky(){
+		$rules = Customer::$rules;
+		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->passes()) {
+			$data = $this->getDataPost('orders');
+			$data['total'] = SiteHelpers::getTotalcart();
+			unset($data['lang']);
+			$data['OrderDate'] = date('Y-m-d H:i:s', time());
+			$mdOrderDetail = new Orderdetail();
+			$mdOrder = new Order();
+			$mdPro = new Nproducts();
+			$ID = $mdOrder->insertRow($data,'');
+			if($ID){
+				foreach($cart as $key=>$val){
+					$product = $mdPro->find($key);
+					$price = SiteHelpers::getPricePromotion($product);
+					$data_cart['UnitPrice'] = $price;
+					$data_cart['OrderID'] = $ID;
+					$data_cart['ProductID'] = $key;
+					$data_cart['Quantity'] = $val;
+					$mdOrderDetail->insertRow($data_cart,'');
+				}
+
+				Session::put('addcart',array());
+				Session::save();
+			}
+			return Redirect::to('')->with('message', SiteHelpers::alert('success','Đặt hàng thành công'));
+		}
+		else{
+			return Redirect::to('dang-ky.html')->with('message_dangky', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->with('input_rd',Input::all())->withErrors($validator)->withInput();
+		}
 	}
 
 	/*public function page($id){

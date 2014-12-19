@@ -26,46 +26,41 @@
 		</ul>
 		 {{ Form::open(array('url'=>'Customer/save/'.SiteHelpers::encryptID($row['customer_id']).'?md='.$filtermd.$trackUri, 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ')) }}
 				<div class="col-md-12">
-						<fieldset><legend> Customer</legend>
+						<fieldset><legend> {{ Lang::get('core.customer') }}</legend>
 									
+
+									  {{ Form::hidden('customer_id', $row['customer_id'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+
+								  </div> 					
 								  <div class="form-group  " >
-									<label for="Customer Id" class=" control-label col-md-4 text-left"> Customer Id </label>
+									<label for="Name" class=" control-label col-md-4 text-left"> {{ Lang::get('core.customer_name') }} </label>
 									<div class="col-md-6">
-									  {{ Form::text('customer_id', $row['customer_id'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  {{ Form::text('name', $row['name'],array('class'=>'form-control', 'placeholder'=>'', 'readonly'=>''  )) }} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Name" class=" control-label col-md-4 text-left"> Name </label>
+									<label for="Email" class=" control-label col-md-4 text-left"> {{ Lang::get('core.email') }} </label>
 									<div class="col-md-6">
-									  {{ Form::text('name', $row['name'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  {{ Form::text('email', $row['email'],array('class'=>'form-control', 'placeholder'=>'',  'readonly'=>'' )) }} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Email" class=" control-label col-md-4 text-left"> Email </label>
+									<label for="Phone" class=" control-label col-md-4 text-left"> {{ Lang::get('core.phone') }} </label>
 									<div class="col-md-6">
-									  {{ Form::text('email', $row['email'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  {{ Form::text('phone', $row['phone'],array('class'=>'form-control', 'placeholder'=>'', 'readonly'=>''  )) }} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
-								  <div class="form-group  " >
-									<label for="Phone" class=" control-label col-md-4 text-left"> Phone </label>
-									<div class="col-md-6">
-									  {{ Form::text('phone', $row['phone'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
-									<label for="Password" class=" control-label col-md-4 text-left"> Password </label>
+								  <!--<div class="form-group  " >
+									<label for="Password" class=" control-label col-md-4 text-left"> {{ Lang::get('core.password') }} </label>
 									<div class="col-md-6">
 									  {{ Form::text('password', $row['password'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
 									 </div> 
@@ -74,7 +69,7 @@
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Username" class=" control-label col-md-4 text-left"> Username </label>
+									<label for="Username" class=" control-label col-md-4 text-left"> {{ Lang::get('core.username') }} </label>
 									<div class="col-md-6">
 									  {{ Form::text('username', $row['username'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
 									 </div> 
@@ -83,7 +78,7 @@
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Address" class=" control-label col-md-4 text-left"> Address </label>
+									<label for="Address" class=" control-label col-md-4 text-left"> {{ Lang::get('core.address') }} </label>
 									<div class="col-md-6">
 									  {{ Form::text('address', $row['address'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
 									 </div> 
@@ -92,34 +87,41 @@
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Provinceid" class=" control-label col-md-4 text-left"> Provinceid </label>
+									<label for="OrderDate" class=" control-label col-md-4 text-left"> {{ Lang::get('core.table_city') }} </label>
 									<div class="col-md-6">
-									  {{ Form::text('provinceid', $row['provinceid'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  
+				<select name='provinceid' rows='5' id='city' code='{$provinceid}' 
+							class='select2 '    ></select>
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Wardid" class=" control-label col-md-4 text-left"> Wardid </label>
+									<label for="RequiredDate" class=" control-label col-md-4 text-left"> {{ Lang::get('core.table_district') }} </label>
 									<div class="col-md-6">
-									  {{ Form::text('wardid', $row['wardid'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  
+				<select name='districtid' rows='5' id='district' code='{$districtid}' 
+							class='select2 '    ></select> 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Districtid" class=" control-label col-md-4 text-left"> Districtid </label>
+									<label for="ShippedDate" class=" control-label col-md-4 text-left"> {{ Lang::get('core.table_ward') }} </label>
 									<div class="col-md-6">
-									  {{ Form::text('districtid', $row['districtid'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  
+				<select name='wardid' rows='5' id='ward' code='{$wardid}' 
+							class='select2 '    ></select> 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div> 					
+								  </div>-->
+								  
 								  <div class="form-group  " >
-									<label for="Status" class=" control-label col-md-4 text-left"> Status </label>
+									<label for="Status" class=" control-label col-md-4 text-left"> {{ Lang::get('core.customer_status') }} </label>
 									<div class="col-md-6">
 									  {{ Form::text('status', $row['status'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
 									 </div> 
@@ -128,7 +130,7 @@
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Type" class=" control-label col-md-4 text-left"> Type </label>
+									<label for="Type" class=" control-label col-md-4 text-left"> {{ Lang::get('core.customer_type') }} </label>
 									<div class="col-md-6">
 									  {{ Form::text('type', $row['type'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
 									 </div> 
@@ -158,6 +160,6 @@
 </div>			 
    <script type="text/javascript">
 	$(document).ready(function() { 
-		 
+		
 	});
 	</script>		 

@@ -6,13 +6,13 @@ return array(
 	"after"            => "The :attribute must be a date after :date.",
 	"alpha"            => "The :attribute may only contain letters.",
 	"alpha_dash"       => "The :attribute may only contain letters, numbers, and dashes.",
-	"alpha_num"        => "The :attribute may only contain letters and numbers.",
+	"alpha_num"        => ":attribute phải là chữ hoặc số.",
 	"array"            => "The :attribute must be an array.",
 	"before"           => "The :attribute must be a date before :date.",
 	"between"          => array(
-		"numeric" => "The :attribute must be between :min and :max.",
+		"numeric" => ":attribute phải từ :min tới :max ký tự.",
 		"file"    => "The :attribute must be between :min and :max kilobytes.",
-		"string"  => "The :attribute must be between :min and :max characters.",
+		"string"  => ":attribute phải từ :min tới :max ký tự.",
 		"array"   => "The :attribute must have between :min and :max items.",
 	),
 	"confirmed"        => "The :attribute confirmation does not match.",
@@ -47,7 +47,7 @@ return array(
 	"required_if"      => "The :attribute field is required when :other is :value.",
 	"required_with"    => "The :attribute field is required when :values is present.",
 	"required_without" => "The :attribute field is required when :values is not present.",
-	"same"             => "The :attribute and :other must match.",
+	"same"             => ":attribute và :other Phải giống nhau.",
 	"size"             => array(
 		"numeric" => "The :attribute must be :size.",
 		"file"    => "The :attribute must be :size kilobytes.",
@@ -56,7 +56,7 @@ return array(
 	),
 	"unique"           => ":attribute đã tồn tại.",
 	"url"              => ":attribute không đúng định dạng.",
-	"recaptcha" => ':attribute Không chính xác',
+	"recaptcha" => 'Mã bảo mật Không chính xác',
 	/*
 	|--------------------------------------------------------------------------
 	| Custom Validation Language Lines
@@ -81,6 +81,19 @@ return array(
 	|
 	*/
 
-	'attributes' => array(),
+	'attributes' => array(
+			'username' => 'Tên đăng nhập',
+			'name' => 'Tên',
+			'email' => 'Email',
+			'phone' => 'Số điện thoại',
+			'address' => 'Địa chỉ',
+			'password' => 'Mật khẩu',
+			'repassword' => 'Xác nhận mật khẩu',
+			'password' => 'Mật khẩu',
+			'provinceid' => 'Tỉnh/Thành',
+			'districtid' => 'Quận/Huyện',
+			'wardid' => 'Phường/Xã',
+			'recaptcha_response_field' => 'Mã bảo mật',
+		),
 
 );
