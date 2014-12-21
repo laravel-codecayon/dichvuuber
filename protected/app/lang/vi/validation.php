@@ -94,6 +94,8 @@ return array(
 			'districtid' => 'Quận/Huyện',
 			'wardid' => 'Phường/Xã',
 			'recaptcha_response_field' => 'Mã bảo mật',
+			'newpassword' => 'Mật khẩu mới',
+			'confirmpassword' => 'Nhập lại mật khẩu',
 		),
 
 );

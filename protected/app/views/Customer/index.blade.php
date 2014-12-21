@@ -16,7 +16,7 @@
 	
 	<div class="page-content-wrapper">
     <div class="toolbar-line ">
-			@if($access['is_add'] ==1)
+			@if($access['is_add'] ==1&& 1 == 2)
 	   		<a href="{{ URL::to('Customer/add?md='.$masterdetail["filtermd"].$trackUri) }}" class="tips btn btn-xs btn-info"  title="{{ Lang::get('core.btn_create') }}">
 			<i class="icon-plus-circle2"></i>&nbsp;{{ Lang::get('core.btn_create') }}</a>
 			@endif  
@@ -24,7 +24,7 @@
 			<a href="javascript://ajax"  onclick="SximoDelete();" class="tips btn btn-xs btn-danger" title="{{ Lang::get('core.btn_remove') }}">
 			<i class="icon-bubble-trash"></i>&nbsp;{{ Lang::get('core.btn_remove') }}</a>
 			@endif 		
-			@if($access['is_excel'] ==1)
+			@if($access['is_excel'] ==1&& 1 == 2)
 			<a id="export-excel" href="javascript:" class="tips btn btn-xs btn-default" title="{{ Lang::get('core.btn_download') }}">
 			<i class="icon-folder-download2"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
 			@endif		

@@ -24,76 +24,70 @@
 		<tbody>	
 	
 					<tr>
-						<td width='30%' class='label-view text-right'>Customer Id</td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.table_id') }}</td>
 						<td>{{ $row->customer_id }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Name</td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.table_name') }}</td>
 						<td>{{ $row->name }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Email</td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.table_email') }}</td>
 						<td>{{ $row->email }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Phone</td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.table_phone') }}</td>
 						<td>{{ $row->phone }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Password</td>
-						<td>{{ $row->password }} </td>
-						
-					</tr>
-				
-					<tr>
-						<td width='30%' class='label-view text-right'>Username</td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.username') }}</td>
 						<td>{{ $row->username }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Address</td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.table_address') }}</td>
 						<td>{{ $row->address }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Provinceid</td>
-						<td>{{ $row->provinceid }} </td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.city') }}</td>
+						<td>{{ SiteHelpers::getNameaddress($row->provinceid,'province','provinceid') }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Wardid</td>
-						<td>{{ $row->wardid }} </td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.ward') }}</td>
+						<td>{{ SiteHelpers::getNameaddress($row->wardid,'ward','wardid') }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Districtid</td>
-						<td>{{ $row->districtid }} </td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.district') }}</td>
+						<td>{{ SiteHelpers::getNameaddress($row->districtid,'district','districtid') }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Status</td>
-						<td>{{ $row->status }} </td>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.table_status') }}</td>
+						<td>@if($row->status == 1) {{ Lang::get('core.enable') }}  @else {{ Lang::get('core.disable') }}  @endif </td>
 						
 					</tr>
 				
-					<tr>
-						<td width='30%' class='label-view text-right'>Type</td>
+					<!--<tr>
+						<td width='30%' class='label-view text-right'>{{ Lang::get('core.table_type_customer') }}</td>
 						<td>{{ $row->type }} </td>
 						
-					</tr>
+					</tr>-->
 				
 		</tbody>	
 	</table>    

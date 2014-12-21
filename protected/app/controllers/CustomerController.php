@@ -158,27 +158,21 @@ class CustomerController extends BaseController {
 	function postSave( $id =0)
 	{
 		$trackUri = $this->data['trackUri'];
-		$rules = $this->validateForm();
-		$validator = Validator::make(Input::all(), $rules);	
-		if ($validator->passes()) {
-			$data = $this->validatePost('customer');
-			$ID = $this->model->insertRow($data , Input::get('customer_id'));
-			// Input logs
-			if( Input::get('customer_id') =='')
-			{
-				$this->inputLogs("New Entry row with ID : $ID  , Has Been Save Successfull");
-				$id = SiteHelpers::encryptID($ID);
-			} else {
-				$this->inputLogs(" ID : $ID  , Has Been Changed Successfull");
-			}
-			// Redirect after save	
-			$md = str_replace(" ","+",Input::get('md'));
-			$redirect = (!is_null(Input::get('apply')) ? 'Customer/add/'.$id.'?md='.$md.$trackUri :  'Customer?md='.$md.$trackUri );
-			return Redirect::to($redirect)->with('message', SiteHelpers::alert('success',Lang::get('core.note_success')));
+		$data['status'] = Input::get('status');
+		$ID = $this->model->insertRow($data , Input::get('customer_id'));
+		// Input logs
+		if( Input::get('customer_id') =='')
+		{
+			$this->inputLogs("New Entry row with ID : $ID  , Has Been Save Successfull");
+			$id = SiteHelpers::encryptID($ID);
 		} else {
-			return Redirect::to('Customer/add/'.$id.'?md='.$md)->with('message', SiteHelpers::alert('error',Lang::get('core.note_error')))
-			->withErrors($validator)->withInput();
-		}	
+			$this->inputLogs(" ID : $ID  , Has Been Changed Successfull");
+		}
+		// Redirect after save	
+		$md = str_replace(" ","+",Input::get('md'));
+		$redirect = (!is_null(Input::get('apply')) ? 'Customer/add/'.$id.'?md=' :  'Customer?md='.$md );
+		return Redirect::to($redirect)->with('message', SiteHelpers::alert('success',Lang::get('core.note_success')));
+
 	
 	}
 	

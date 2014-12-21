@@ -1,33 +1,25 @@
 {{ HTML::script('sximo/themes/shop/js/jquery.jcombo.min.js') }}
 <div class="container">
 			<div class="box register">
-                <h2>Đăng ký miễn phí</h2>
-                <p>Vậy còn chờ gì ? Hãy tham gia ngay!</p>
-                @if(Session::has('message_dangky'))
-                     {{ Session::get('message_dangky') }}
+                <h2>Thông tin cá nhân !</h2>
+                @if(Session::has('message_changeinfo'))
+                     {{ Session::get('message_changeinfo') }}
                 @endif
                 <ul class="parsley-error-list">
                   @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                   @endforeach
                 </ul>
-                <form  method="post" action="{{URL::to('home/dangky')}}">
+                <form  method="post" action="{{URL::to('home/changeinfo')}}">
+                  <input type="hidden"/>
                 	<div class="group-name">Thông tin tài khoản</div>
                     <div class="input-group">
                       <span class="input-group-addon">Tài khoản</span>
-                      <input  type="text" class="form-control" name="username" value="{{$input['username']}}" >
-                    </div>
-                    <div class="input-group">
-                      <span class="input-group-addon">Mật khẩu</span>
-                      <input type="password" class="form-control" name="password">
-                    </div>
-                    <div class="input-group">
-                      <span class="input-group-addon">Nhập lại mật khẩu</span>
-                      <input type="password" class="form-control" name="repassword">
+                      <input  type="text" readonly class="form-control" name="username" value="{{$input['username']}}" >
                     </div>
                     <div class="input-group">
                       <span class="input-group-addon">Email</span>
-                      <input type="text" class="form-control" name="email" value="{{$input['email']}}">
+                      <input type="text" readonly class="form-control" name="email" value="{{$input['email']}}">
                     </div>
                     <div class="group-name">Thông tin cá nhân</div>
                     <div class="input-group">
@@ -72,7 +64,7 @@
 
                       @endif
                     </div>
-                  	<button type="submit" class="btn btn-default submit">Đăng ký</button>
+                  	<button type="submit" class="btn btn-default submit">Gửi</button>
                 </form>
 			</div>
         </div><!-- container -->

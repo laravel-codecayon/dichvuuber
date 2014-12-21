@@ -33,6 +33,9 @@
             </div><!-- links -->
          </div><!-- container -->
 	</header>
+  @if(Session::has('message'))
+       {{ Session::get('message') }}
+  @endif
     <nav id="nav">
     	<div class="container">
         	<ul class="menu">
@@ -43,7 +46,7 @@
             </ul>
             <ul class="member-area">
             	<li @if(isset($menu) && $menu == "dangky") class="post-thread" @endif ><a href="{{URL::to('dang-ky.html')}}">Đăng ký</a></li>
-                <li ><a href="#">Đăng tin</a></li>
+                <li @if(isset($menu) && $menu == "dangtin") class="post-thread" @endif ><a href="{{URL::to('dang-tin.html')}}">Đăng tin</a></li>
             </ul>
         </div><!-- container -->
     </nav>
@@ -55,7 +58,7 @@
             </div><!-- text -->
         </div>
     </section>
-    @if(isset($menu) && $menu != "dangky")
+    @if(isset($menu) && $menu == "index" )
     <section id="search">
     	<div class="container search clearfix">
             <!-- Nav tabs -->
@@ -147,7 +150,7 @@
     <main id="main">
     	{{$content}}
     </main>
-     @if(isset($menu) && $menu != "dangky")
+     @if(isset($menu) && $menu == "index")
     <section id="searchby-provinces">
     	<div class="container">
         	<div class="searchby-provinces box clearfix">

@@ -57,33 +57,248 @@ class HomeController extends BaseController {
 		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
 		$validator = Validator::make(Input::all(), $rules);
 		if ($validator->passes()) {
-			$data = $this->getDataPost('orders');
-			$data['total'] = SiteHelpers::getTotalcart();
-			unset($data['lang']);
-			$data['OrderDate'] = date('Y-m-d H:i:s', time());
-			$mdOrderDetail = new Orderdetail();
-			$mdOrder = new Order();
-			$mdPro = new Nproducts();
-			$ID = $mdOrder->insertRow($data,'');
-			if($ID){
-				foreach($cart as $key=>$val){
-					$product = $mdPro->find($key);
-					$price = SiteHelpers::getPricePromotion($product);
-					$data_cart['UnitPrice'] = $price;
-					$data_cart['OrderID'] = $ID;
-					$data_cart['ProductID'] = $key;
-					$data_cart['Quantity'] = $val;
-					$mdOrderDetail->insertRow($data_cart,'');
-				}
-
-				Session::put('addcart',array());
-				Session::save();
-			}
-			return Redirect::to('')->with('message', SiteHelpers::alert('success','Đặt hàng thành công'));
+			$data = $this->getDataPost('customer');
+			//print_r($data);die;
+			$data['created'] = time();
+			$data['password'] = md5($data['password']);
+			$data['code'] = md5(time());
+			$mdCus = new Customer();
+			$ID = $mdCus->insertRow($data , Input::get('customer_id'));
+			$data_message = array('name'=>Input::get('name'),'code'=>$data['code'],'email'=>Input::get('email'),'password'=>$data['password']); 
+			Mail::send('emails.dangky', $data_message, function($message)
+			{
+				$message->from( Input::get('email'), Input::get('name') );
+			    $message->to(CNF_EMAIL, 'Admin')->subject(Input::get('subject'));
+			});
+			return Redirect::to('')->with('message', SiteHelpers::alert('success','Đăng ký thành công ! Email kích hoạt dã được gửi vào Email của bạn Vui lòng kích hoạt để sử dụng dịch vụ chủa chúng tôi'));
 		}
 		else{
 			return Redirect::to('dang-ky.html')->with('message_dangky', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->with('input_rd',Input::all())->withErrors($validator)->withInput();
 		}
+	}
+
+	public function getActivation(){
+		if(!isset($_GET['code']) || $_GET['code'] == ''){
+			return Redirect::to('');
+		}
+		$code = $_GET['code'];
+		$customer = DB::table('customer')->where('code','=',$code)->first();
+		if(count($customer) <= 0){
+			return Redirect::to('');
+		}
+		$data['code'] = '';
+		$data['status'] = '1';
+		DB::table('customer')->where('customer_id','=',$customer->customer_id)->update($data);
+		return Redirect::to('')->with('message', SiteHelpers::alert('success','Kích hoạt thành công ! Hãy đăng nhập ngay để tham gia với chúng tôi !'));
+	}
+
+	public function getDangnhap(){
+		$this->data['pageTitle'] = "Đăng nhập";
+		$this->data['pageNote'] = CNF_APPNAME;
+
+
+		//$this->data['breadcrumb'] = 'inactive';
+		$page = 'pages.template.dangnhap';
+
+
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page)->with('page', $this->data)->with('menu','dangnhap');
+	}
+
+	public function postDangnhap(){
+		$rules = array(
+			'username'=>'required',
+			'password'=>'required',
+		);		
+		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->passes()) {
+			$cus = DB::table('customer')->where('username', '=',Input::get('username'))->where('password','=',md5(Input::get('password')))->first();
+			if(count($cus)>0){
+				$arr_cus = array('id'=>$cus->customer_id, 'name'=>$cus->name, "email"=>$cus->email);
+				Session::put('customer',$arr_cus);
+				Session::save();
+				return Redirect::to('');
+			}else{
+				return Redirect::to('home/dangnhap')->with('message_dangnhap', SiteHelpers::alert('error','Sai tên đăng nhập hoặc mật khẩu'));
+			}
+		}
+		else{
+			return Redirect::to('home/dangnhap')->with('message_dangnhap', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->withErrors($validator)->withInput();
+		}
+	}
+
+	public function forgotpass(){
+		$this->data['pageTitle'] = "Quên mật khẩu";
+		$this->data['pageNote'] = CNF_APPNAME;
+
+
+		//$this->data['breadcrumb'] = 'inactive';
+		$page = 'pages.template.forgotpass';
+
+
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page)->with('page', $this->data)->with('menu','forgotpass');
+	}
+
+	public function postForgotpass(){
+		$rules = array(
+			'email'=>'required|email',
+		);
+		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->passes()) {
+			$cus = DB::table('customer')->where('email','=',Input::get('email'))->first();
+			if(count($cus) > 0){
+				$pass = SiteHelpers::randomPassword();
+				DB::table('customer')->where('email','=',Input::get('email'))->update(array('password'=>md5($pass)));
+				$data = array('name'=>$cus->name,'username'=>$cus->username,'pass'=>$pass); 
+				Mail::send('emails.forgotpass', $data, function($message)
+				{
+					$message->from( CNF_EMAIL, 'Admin' );
+				    $message->to(Input::get('email'), '')->subject('Thông tin đăng nhập');
+				});
+			}
+			return Redirect::to('')->with('message', SiteHelpers::alert('success','Vui lòng kiểm tra Email để nận mật khẩu mới !'));
+		}	
+		else{
+			return Redirect::to('forgotpass.html')->with('message_forgotpass', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->withErrors($validator)->withInput();
+		}
+	}
+
+	public function  changeinfo(){
+		if(!Session::has('customer')){
+			return Redirect::to('dang-ky.html');
+		}
+		$this->data['pageTitle'] = "Thay đổi thông tin";
+		$this->data['pageNote'] = CNF_APPNAME;
+		$ses_cus = Session::get('customer');
+		$input = DB::table('customer')->where("customer_id",'=',$ses_cus['id'])->first();
+		
+
+		if(Session::has('input_rd')){
+			$input = Session::get('input_rd');
+		}
+		$data['input'] =(array) $input;
+
+		//$this->data['breadcrumb'] = 'inactive';
+		$page = 'pages.template.changeinfo';
+
+
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','changeinfo');
+	}
+
+	public function postChangeinfo(){
+		if(!Session::has('customer')){
+			return Redirect::to('dang-ky.html');
+		}
+		$rules = $rules=array(
+			"email" => "required|email",
+			"username" => "required|alpha_num|between:5,15",
+			"name" => "required|between:5,15",
+			"phone" => "required|Numeric",
+			"address" => "required",
+			"provinceid" => "required",
+			"districtid" => "required",
+			"wardid" => "required",
+		);
+		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->passes()) {
+			$data['name'] = Input::get('name');
+			$data['phone'] = Input::get('phone');
+			$data['address'] = Input::get('address');
+			$data['provinceid'] = Input::get('provinceid');
+			$data['districtid'] = Input::get('districtid');
+			$data['wardid'] = Input::get('wardid');
+			DB::table('customer')->where('email','=',Input::get('email'))->where('username','=',Input::get('username'))->update($data);
+			return Redirect::to('change-info.html')->with('message', SiteHelpers::alert('success','Thay đổi thông tin thành công !'));
+		}else{
+			return Redirect::to('change-info.html')->with('message_changeinfo', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->withErrors($validator)->withInput();
+		}
+	}
+
+	public function changepass(){
+		if(!Session::has('customer')){
+			return Redirect::to('dang-ky.html');
+		}
+		$this->data['pageTitle'] = "Thay đổi mật khẩu";
+		$this->data['pageNote'] = CNF_APPNAME;
+		$page = 'pages.template.changepass';
+
+
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page)->with('page', $this->data)->with('menu','changepass');
+	}
+
+	public function postChangepass(){
+		if(!Session::has('customer')){
+			return Redirect::to('dang-ky.html');
+		}
+		$rules = $rules=array(
+			"password" => "required|between:5,20",
+			"newpassword" => "required|between:5,20",
+			"confirmpassword" => "required|same:newpassword",
+		);
+		//if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->passes()) {
+			$ses_cus = Session::get('customer');
+			$cus = DB::table('customer')->where('customer_id','=',$ses_cus['id'])->first();
+			if(md5(Input::get('password')) != $cus->password){
+				return Redirect::to('change-pass.html')->with('message_changepass', SiteHelpers::alert('error','Mật khẩu cũ không chính xác !'));
+			}
+			$pass = md5(Input::get('newpassword'));
+			DB::table('customer')->where('customer_id','=',$ses_cus['id'])->update(array('password'=>$pass));
+			return Redirect::to('')->with('message', SiteHelpers::alert('success','Thay đổi mật khẩu thành công !'));
+		}else{
+			return Redirect::to('change-pass.html')->with('message_changepass', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->withErrors($validator)->withInput();
+		}
+		$rules = $rules=array(
+			"type_customer" => "required|Numeric",
+			"subject" => "required",
+			"subject" => "required|alpha_num|between:5,15",
+			"name" => "required|between:5,15",
+			"phone" => "required|Numeric",
+			"address" => "required",
+			"provinceid" => "required",
+			"districtid" => "required",
+			"wardid" => "required",
+		);
+		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->passes()) {
+
+		}else{
+
+		}
+
+	}
+
+	public function getLogout(){
+		Session::forget('customer');
+		return Redirect::to('');
+	}
+
+	public function dangtin(){
+		if(!Session::has('customer')){
+			return Redirect::to('home/dangnhap');
+		}
+		$this->data['pageTitle'] = "Đăng tin";
+		$this->data['pageNote'] = CNF_APPNAME;
+		$page = 'pages.template.dangtin';
+
+
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page)->with('page', $this->data)->with('menu','dangtin');
+	}
+
+	public function postDangtin(){
+		if(!Session::has('customer')){
+			return Redirect::to('home/dangnhap');
+		}
+
 	}
 
 	/*public function page($id){
@@ -313,7 +528,7 @@ class HomeController extends BaseController {
 		$page = SiteHelpers::renderHtml($page);
 		
 
-		$this->layout->nest('content',$page,$data)->with('menus', $this->menus );
+		$this->layout->nest('content',$page,$data)->with('menu', 'index' );
 			
 	}
 
