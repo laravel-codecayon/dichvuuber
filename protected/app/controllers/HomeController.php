@@ -241,7 +241,7 @@ class HomeController extends BaseController {
 			"newpassword" => "required|between:5,20",
 			"confirmpassword" => "required|same:newpassword",
 		);
-		//if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
+		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
 		$validator = Validator::make(Input::all(), $rules);
 		if ($validator->passes()) {
 			$ses_cus = Session::get('customer');
@@ -288,7 +288,8 @@ class HomeController extends BaseController {
 		$this->data['pageTitle'] = "Đăng tin";
 		$this->data['pageNote'] = CNF_APPNAME;
 		$page = 'pages.template.dangtin';
-
+		$ses_cus = Session::get('customer');
+		$cus = DB::table('customer')->where("customer_id","=",$ses_cus['id'])->first();
 		$input = array(
 				'post_typecustomer'	=>'',
 				'post_subject'	=>'',
@@ -302,9 +303,9 @@ class HomeController extends BaseController {
 				'post_price'	=>'0',
 				'post_typecar'	=>'',
 				'post_note'	=>'',
-				'name'	=>'',
-				'phone'	=>'',
-				'address'	=>'',
+				'name'	=>$cus->name,
+				'phone'	=>$cus->phone,
+				'address'	=>$cus->address." ".SiteHelpers::getNameaddress($cus->provinceid,'province','provinceid')." ".SiteHelpers::getNameaddress($cus->districtid,'district','districtid')." ".SiteHelpers::getNameaddress($cus->wardid,'ward','wardid'),
 			);
 		if(Session::has('input_rd')){
 			$input = Session::get('input_rd');
@@ -319,6 +320,7 @@ class HomeController extends BaseController {
 		if(!Session::has('customer')){
 			return Redirect::to('home/dangnhap');
 		}
+		
 		$rules = array(
 				'post_typecustomer'		=>'required|Numeric',
 				'post_subject'			=>'required',
@@ -335,7 +337,10 @@ class HomeController extends BaseController {
 				'name'					=>'required',
 				'phone'					=>'required',
 				'address'				=>'required',
+				"post_file1" => "mimes:doc,docx|max:10000",
+				"post_file2" => "mimes:doc,docx|max:10000",
 		);
+		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
 		$validator = Validator::make(Input::all(), $rules);	
 		if ($validator->passes()) 
 		{
@@ -343,11 +348,34 @@ class HomeController extends BaseController {
 			$data['created'] = time();
 			$data['post_datestar'] = strtotime($data['post_datestar']);
 			unset($data['lang']);
+			if(!is_null(Input::file('post_file1')))
+			{
+				$file = Input::file('post_file1');
+				$destinationPath = './uploads/files/';
+				$filename = $file->getClientOriginalName();
+				$extension = $file->getClientOriginalExtension(); //if you need extension of the file
+				$newfilename = time().'.'.$extension;
+				$uploadSuccess = Input::file('post_file1')->move($destinationPath, $newfilename);
+				$data['post_file1'] = $newfilename;
+			}
+			if(!is_null(Input::file('post_file2')))
+			{
+				$file = Input::file('post_file2');
+				$destinationPath = './uploads/files/';
+				$filename = $file->getClientOriginalName();
+				$extension = $file->getClientOriginalExtension(); //if you need extension of the file
+				$newfilename = time().'.'.$extension;
+				$uploadSuccess = Input::file('post_file2')->move($destinationPath, $newfilename);
+				$data['post_file2'] = $newfilename;
+			}
 			$mdPost = new Post();
 			$ID = $mdPost->insertRow($data , '');
-			echo "asdasd";die;
+			return Redirect::to('')->with('message', SiteHelpers::alert('success','Thao tác thành công ! Bài đăng của bạn đang chờ duyệt !'));
 		}else{
-			return Redirect::to('dang-tin.html')->with('message_dangtin', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->with('input_rd',Input::all())->withErrors($validator)->withInput();
+			$input_rd = Input::all();
+			unset($input_rd['post_file1']);
+			unset($input_rd['post_file2']);
+			return Redirect::to('dang-tin.html')->with('message_dangtin', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->with('input_rd',$input_rd)->withErrors($validator)->withInput();
 		}
 
 	}

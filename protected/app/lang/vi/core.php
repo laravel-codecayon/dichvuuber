@@ -248,4 +248,6 @@ return array(
 	"ward"						=> "Phường/Xã",
 	"customer_status"			=> "Trạng thái ",
 	"customer_type"				=> "Loại khách hàng ",
+	"table_subject"				=> "Tiêu đề ",
+	"post_active"				=> "Kích hoạt ",
 );

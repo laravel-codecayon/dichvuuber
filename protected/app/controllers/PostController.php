@@ -12,12 +12,12 @@ class PostController extends BaseController {
 		$this->model = new Post();
 		$this->info = $this->model->makeInfo( $this->module);
 		$this->access = $this->model->validAccess($this->info['id']);
-	
+		$this->lang = Session::get('lang') == '' ? CNF_LANG : Session::get('lang');
 		$this->data = array(
 			'pageTitle'	=> 	$this->info['title'],
 			'pageNote'	=>  $this->info['note'],
 			'pageModule'=> 'post',
-			'trackUri' 	=> $this->trackUriSegmented()	
+			'trackUri' 	=> ''	
 		);
 			
 				
@@ -32,7 +32,7 @@ class PostController extends BaseController {
 				
 		// Filter sort and order for query 
 		$sort = (!is_null(Input::get('sort')) ? Input::get('sort') : 'post_id'); 
-		$order = (!is_null(Input::get('order')) ? Input::get('order') : 'asc');
+		$order = (!is_null(Input::get('order')) ? Input::get('order') : 'desc');
 		// End Filter sort and order for query 
 		// Filter Search for query		
 		$filter = (!is_null(Input::get('search')) ? $this->buildSearch() : '');
@@ -72,6 +72,16 @@ class PostController extends BaseController {
 		$this->data['tableGrid'] 	= $this->info['config']['grid'];
 		$this->data['tableForm'] 	= $this->info['config']['forms'];
 		$this->data['colspan'] 		= SiteHelpers::viewColSpan($this->info['config']['grid']);		
+
+		$test 						= $this->model->columnTable();
+		$arr_search 				= SiteHelpers::arraySearch(Input::get('search'));
+		foreach($arr_search as $key=>$val){
+			if($key != "sort" && $key != "order" && $key != "rows"){
+				$test[$key]['value'] = $val;
+			}
+		}
+		$this->data['test'] = $test;
+
 		// Group users permission
 		$this->data['access']		= $this->access;
 		// Detail from master if any
@@ -146,11 +156,20 @@ class PostController extends BaseController {
 	function postSave( $id =0)
 	{
 		$trackUri = $this->data['trackUri'];
-		$rules = $this->validateForm();
+		$rules = array(
+					'post_note'=>'required',
+				);
 		$validator = Validator::make(Input::all(), $rules);	
 		if ($validator->passes()) {
-			$data = $this->validatePost('post');
-			$ID = $this->model->insertRow($data , Input::get('post_id'));
+			$data['post_note'] = Input::get('post_note');
+			if(Input::get('active')!=''){
+				$data['status'] = '1';
+				$data['active'] = Input::get('active');
+			}else{
+				$data['status'] = Input::get('status');
+			}
+			$ID = Input::get('post_id');
+			DB::table('post')->where('post_id','=',$ID)->update($data);
 			// Input logs
 			if( Input::get('post_id') =='')
 			{
@@ -161,7 +180,7 @@ class PostController extends BaseController {
 			}
 			// Redirect after save	
 			$md = str_replace(" ","+",Input::get('md'));
-			$redirect = (!is_null(Input::get('apply')) ? 'post/add/'.$id.'?md='.$md.$trackUri :  'post?md='.$md.$trackUri );
+			$redirect = (!is_null(Input::get('apply')) ? 'post/add/'.$id.'?md='.$md :  'post?md='.$md.$trackUri );
 			return Redirect::to($redirect)->with('message', SiteHelpers::alert('success',Lang::get('core.note_success')));
 		} else {
 			return Redirect::to('post/add/'.$id.'?md='.$md)->with('message', SiteHelpers::alert('error',Lang::get('core.note_error')))

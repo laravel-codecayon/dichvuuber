@@ -33,7 +33,7 @@ return array(
 		"string"  => "The :attribute may not be greater than :max characters.",
 		"array"   => "The :attribute may not have more than :max items.",
 	),
-	"mimes"            => "The :attribute must be a file of type: :values.",
+	"mimes"            => ":attribute phải có đuôi là: :values.",
 	"min"              => array(
 		"numeric" => "The :attribute must be at least :min.",
 		"file"    => "The :attribute must be at least :min kilobytes.",
@@ -107,6 +107,9 @@ return array(
 			'post_note' => 'Ghi chú',
 			'post_subject' => 'Tiêu đề',
 			'post_typecar' => 'Loại xe',
+			'post_file1' => 'Tập tin',
+			'post_file2' => 'Tập tin',
+			'post_price' => 'Giá',
 		),
 
 );

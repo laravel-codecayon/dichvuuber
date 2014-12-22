@@ -14,14 +14,14 @@
                 <form method="post" action="{{URL::to('')}}/home/dangtin" enctype="multipart/form-data">
                 	<div class="input-group">
                       <label>Bạn là </label>
-                      <label class="type left"><span><input type="radio" name="post_typecustomer" value="1"></span> Hành khách</label>
+                      <label class="type left"><span><input type="radio" name="post_typecustomer" @if($input['post_typecustomer'] == 1) checked @endif value="1"></span> Hành khách</label>
                       <span> hay </span>
-                      <label class="type right"><span><input type="radio" name="post_typecustomer" value="0"></span> Tài xế</label>
+                      <label class="type right"><span><input type="radio" name="post_typecustomer" @if($input['post_typecustomer'] == 0) checked @endif value="0"></span> Tài xế</label>
                     </div>
                     <div class="devide clearfix"></div>
                     <div class="input-group">
                       <label>Tiêu đề</label>
-                      <input type="text" name="post_subject" class="form-control">
+                      <input type="text" value="{{$input['post_subject']}}" name="post_subject" class="form-control">
                     </div>
                     <div class="devide clearfix"></div>
                     <div class="place">
@@ -31,7 +31,7 @@
                           	</select>
                           	<select id="district_from" name="post_districtfrom" class="form-control">
                           	</select>
-                          	<input type="text" class="form-control" name="post_addressfrom" placeholder="Địa chỉ chi tiết">
+                          	<input type="text" class="form-control" value="{{$input['post_addressfrom']}}" name="post_addressfrom" placeholder="Địa chỉ chi tiết">
                       	</div>
                     </div><!-- place -->
                     <div class="devide clearfix"></div>
@@ -42,32 +42,32 @@
                           	</select>
                           	<select id="district_to" name="post_districtto" class="form-control">
                           	</select>
-                          	<input type="text" class="form-control" name="post_addressto" placeholder="Địa chỉ chi tiết">
+                          	<input type="text" class="form-control" value="{{$input['post_addressto']}}" name="post_addressto" placeholder="Địa chỉ chi tiết">
                       	</div>
                     </div><!-- place -->
                     <div class="devide clearfix"></div>
                  	<div class="input-group date">
                     <label>Ngày xuất phát</label>
-                        <input name="post_datestar" type="text" data-beatpicker="true" data-beatpicker-format="['DD','MM','YYYY'],separator:'/'" data-beatpicker-position="['right','bottom']" data-beatpicker-disable="{from:[1970 , 2 , 2],to:[{{date("Y")}} , {{date("m")}}  , <?php echo (date("d") -1 ) ?> ]}"/>
+                        <input name="post_datestar" value="{{$input['post_datestar']}}" type="text" data-beatpicker="true" data-beatpicker-format="['DD','MM','YYYY'],separator:'-'" data-beatpicker-position="['right','bottom']" data-beatpicker-disable="{from:[1970 , 2 , 2],to:[{{date("Y")}} , {{date("m")}}  , <?php echo (date("d") -1 ) ?> ]}"/>
                 	</div>
                     <div class="devide clearfix"></div>
                     <div class="column left">
                    		<div class="input-group">
                           <label>Giá</label>
-                          <input name="post_price" type="text" class="form-control" value="0">
+                          <input name="post_price" type="text"  class="form-control" value="{{$input['post_price']}}">
                         </div>
                     </div><!-- column -->
                     <div class="column right">
                         <div class="input-group">
                           <label>Loại xe</label>
-                          <input name="post_typecar" type="text" class="form-control">
+                          <input name="post_typecar" type="text" value="{{$input['post_typecar']}}" class="form-control">
                         </div>
                     </div><!-- column -->
                     <div class="devide clearfix"></div>
                     <div class="column left">
                    		<div class="input-group">
                           <label>Ghi chú thêm</label>
-                          <textarea name="post_note"></textarea>
+                          <textarea  name="post_note">{{$input['post_note']}}</textarea>
                         </div>
                     </div><!-- column -->
                     <div class="column right">
@@ -81,9 +81,9 @@
                     <div class="box info-user">
                     	<label>Thông tin liên hệ</label>
                     	<table>
-                        	<tr><td>Tên</td><td><input type="text" class="form-control" value="" name="name"></td></tr>
-                            <tr><td>Số điện thoại</td><td><input type="text" class="form-control" value="" name="phone"></td></tr>
-                            <tr><td>Địa chỉ</td><td><input type="text" class="form-control" value="" name="address"></td></tr>
+                        	<tr><td>Tên</td><td><input type="text" class="form-control" id="name" value="{{$input['name']}}" name="name"></td></tr>
+                            <tr><td>Số điện thoại</td><td><input type="text" id="phone" class="form-control" value="{{$input['phone']}}" name="phone"></td></tr>
+                            <tr><td>Địa chỉ</td><td><input type="text" id="address" class="form-control" value="{{$input['address']}}" name="address"></td></tr>
                         </table>
                     </div><!-- info-user -->
                     <div class="box info-user">

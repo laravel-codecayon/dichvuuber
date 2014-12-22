@@ -27,126 +27,76 @@
 		 {{ Form::open(array('url'=>'post/save/'.SiteHelpers::encryptID($row['post_id']).'?md='.$filtermd.$trackUri, 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ')) }}
 				<div class="col-md-12">
 						<fieldset><legend> Bảng tin</legend>
-									
+									  {{ Form::hidden('post_id', $row['post_id'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
 								  <div class="form-group  " >
-									<label for="Post Id" class=" control-label col-md-4 text-left"> Post Id </label>
+									<label for="Post Typecustomer" class=" control-label col-md-4 text-left"> {{ Lang::get('core.table_type_customer') }} </label>
 									<div class="col-md-6">
-									  {{ Form::text('post_id', $row['post_id'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  <input type="text" readonly value="@if($row['post_typecustomer'] == 0) Khách hàng @else Tài xế @endif" class="form-control" /> 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Post Typecustomer" class=" control-label col-md-4 text-left"> Post Typecustomer </label>
+									<label for="Post Subject" class=" control-label col-md-4 text-left"> Tiêu đề </label>
 									<div class="col-md-6">
-									  {{ Form::text('post_typecustomer', $row['post_typecustomer'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+										<input type="text" readonly value="{{$row['post_subject']}}" class="form-control" />
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Post Subject" class=" control-label col-md-4 text-left"> Post Subject </label>
+									<label for="Post Provincefrom" class=" control-label col-md-4 text-left"> Nơi đi </label>
 									<div class="col-md-6">
-									  {{ Form::text('post_subject', $row['post_subject'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+										<input type="text" readonly value="<?php echo $row['post_addressfrom'] .' - ' .SiteHelpers::getNameaddress($row['post_provincefrom'],'province','provinceid').' - ' .SiteHelpers::getNameaddress($row['post_districtfrom'],'district','districtid') ?>" class="form-control" />
+									  
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Post Provincefrom" class=" control-label col-md-4 text-left"> Post Provincefrom </label>
+									<label for="Post Districtfrom" class=" control-label col-md-4 text-left"> Nơi đến </label>
 									<div class="col-md-6">
-									  {{ Form::text('post_provincefrom', $row['post_provincefrom'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  <input type="text" readonly value="<?php echo $row['post_addressto'] .' - ' .SiteHelpers::getNameaddress($row['post_provinceto'],'province','provinceid').' - ' .SiteHelpers::getNameaddress($row['post_districtto'],'district','districtid') ?>" class="form-control" />
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Post Districtfrom" class=" control-label col-md-4 text-left"> Post Districtfrom </label>
+									<label for="Post Addressfrom" class=" control-label col-md-4 text-left"> Ngày xuất phát </label>
 									<div class="col-md-6">
-									  {{ Form::text('post_districtfrom', $row['post_districtfrom'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  <input type="text" readonly value="{{date('d-m-Y',$row['post_datestar'])}}" class="form-control" />
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Post Addressfrom" class=" control-label col-md-4 text-left"> Post Addressfrom </label>
+									<label for="Post Provinceto" class=" control-label col-md-4 text-left"> Giá </label>
 									<div class="col-md-6">
-									  {{ Form::text('post_addressfrom', $row['post_addressfrom'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+										<input type="text" readonly value="{{number_format($row['post_price'],0,',','.') }} VNĐ" class="form-control" />
+									 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Post Provinceto" class=" control-label col-md-4 text-left"> Post Provinceto </label>
+									<label for="Post Districtto" class=" control-label col-md-4 text-left"> Loại xe </label>
 									<div class="col-md-6">
-									  {{ Form::text('post_provinceto', $row['post_provinceto'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+										<input type="text" readonly value="{{$row['post_typecar'] }}" class="form-control" />
+			
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
-								  <div class="form-group  " >
-									<label for="Post Districtto" class=" control-label col-md-4 text-left"> Post Districtto </label>
-									<div class="col-md-6">
-									  {{ Form::text('post_districtto', $row['post_districtto'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
-									<label for="Post Addressto" class=" control-label col-md-4 text-left"> Post Addressto </label>
-									<div class="col-md-6">
-									  {{ Form::text('post_addressto', $row['post_addressto'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
-									<label for="Post Datestar" class=" control-label col-md-4 text-left"> Post Datestar </label>
-									<div class="col-md-6">
-									  {{ Form::text('post_datestar', $row['post_datestar'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
-									<label for="Post Price" class=" control-label col-md-4 text-left"> Post Price </label>
-									<div class="col-md-6">
-									  {{ Form::text('post_price', $row['post_price'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
-									<label for="Post Typecar" class=" control-label col-md-4 text-left"> Post Typecar </label>
-									<div class="col-md-6">
-									  {{ Form::text('post_typecar', $row['post_typecar'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
-									<label for="Post Note" class=" control-label col-md-4 text-left"> Post Note </label>
-									<div class="col-md-6">
-									  <textarea name='post_note' rows='2' id='post_note' class='form-control '  
-				           >{{ $row['post_note'] }}</textarea> 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
+								  
+								 
+								  <!--<div class="form-group  " >
 									<label for="Post File1" class=" control-label col-md-4 text-left"> Post File1 </label>
 									<div class="col-md-6">
 									  {{ Form::text('post_file1', $row['post_file1'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
@@ -163,52 +113,71 @@
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div> 					
+								  </div> 					-->
 								  <div class="form-group  " >
-									<label for="Name" class=" control-label col-md-4 text-left"> Name </label>
+									<label for="Name" class=" control-label col-md-4 text-left"> Tên </label>
 									<div class="col-md-6">
-									  {{ Form::text('name', $row['name'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  <input type="text" readonly value="{{$row['name'] }}" class="form-control" />
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Phone" class=" control-label col-md-4 text-left"> Phone </label>
+									<label for="Phone" class=" control-label col-md-4 text-left"> Điện thoại </label>
 									<div class="col-md-6">
-									  {{ Form::text('phone', $row['phone'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  <input type="text" readonly value="{{$row['phone'] }}" class="form-control" />
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Address" class=" control-label col-md-4 text-left"> Address </label>
+									<label for="Address" class=" control-label col-md-4 text-left"> Địa chỉ </label>
 									<div class="col-md-6">
-									  {{ Form::text('address', $row['address'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  <input type="text" readonly value="{{$row['address'] }}" class="form-control" />
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
-								  <div class="form-group  " >
-									<label for="Created" class=" control-label col-md-4 text-left"> Created </label>
+								   <div class="form-group  " >
+									<label for="Post Note" class=" control-label col-md-4 text-left"> Ghi chú </label>
 									<div class="col-md-6">
-									  {{ Form::text('created', $row['created'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  <textarea name='post_note' rows='2' id='post_note' class='form-control '  >{{ $row['post_note'] }}</textarea> 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
+								  @if($row['active'] == 0)
 								  <div class="form-group  " >
-									<label for="Status" class=" control-label col-md-4 text-left"> Status </label>
+									<label for="Status" class=" control-label col-md-4 text-left"> Kích hoạt </label>
 									<div class="col-md-6">
-									  {{ Form::text('status', $row['status'],array('class'=>'form-control', 'placeholder'=>'',   )) }} 
+									  <label class='checked'>
+										<input type='radio' name='active' value ='0' required @if($row['active'] == '0' || $row['active'] == '') checked="checked" @endif > UnActive </label>
+										<label class='checked'>
+										<input type='radio' name='active' value ='1' required @if($row['active'] == '1') checked="checked" @endif > Active </label> 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div> </fieldset>
+								  </div>
+								  @elseif
+									<div class="form-group  " >
+									<label for="Status" class=" control-label col-md-4 text-left"> Trạng thái </label>
+									<div class="col-md-6">
+									  <label class='checked'>
+										<input type='radio' name='status' value ='0' required @if($row['status'] == '0' || $row['status'] == '') checked="checked" @endif > Ẩn </label>
+										<label class='checked'>
+										<input type='radio' name='status' value ='1' required @if($row['status'] == '1') checked="checked" @endif > Hiện </label> 
+									 </div> 
+									 <div class="col-md-2">
+									 	
+									 </div>
+								  </div>
+								  @endif
+								   </fieldset>
 			</div>
 			
 			

@@ -24,68 +24,44 @@
 		<tbody>	
 	
 					<tr>
-						<td width='30%' class='label-view text-right'>Post Id</td>
+						<td width='30%' class='label-view text-right'>ID</td>
 						<td>{{ $row->post_id }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Post Typecustomer</td>
-						<td>{{ $row->post_typecustomer }} </td>
+						<td width='30%' class='label-view text-right'>Loại KH</td>
+						<td>@if($row->post_typecustomer == 0) Khách hàng @else Tài xế @endif </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Post Subject</td>
+						<td width='30%' class='label-view text-right'>Tiêu đề</td>
 						<td>{{ $row->post_subject }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Post Provincefrom</td>
-						<td>{{ $row->post_provincefrom }} </td>
+						<td width='30%' class='label-view text-right'>Nơi đi</td>
+						<td><?php echo $row->post_addressfrom .' - ' .SiteHelpers::getNameaddress($row->post_provincefrom,'province','provinceid').' - ' .SiteHelpers::getNameaddress($row->post_districtfrom,'district','districtid') ?> </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Post Districtfrom</td>
-						<td>{{ $row->post_districtfrom }} </td>
+						<td width='30%' class='label-view text-right'>Nơi đến</td>
+						<td><?php echo $row->post_addressto .' - ' .SiteHelpers::getNameaddress($row->post_provinceto,'province','provinceid').' - ' .SiteHelpers::getNameaddress($row->post_districtto,'district','districtid') ?> </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Post Addressfrom</td>
-						<td>{{ $row->post_addressfrom }} </td>
-						
-					</tr>
-				
-					<tr>
-						<td width='30%' class='label-view text-right'>Post Provinceto</td>
-						<td>{{ $row->post_provinceto }} </td>
-						
-					</tr>
-				
-					<tr>
-						<td width='30%' class='label-view text-right'>Post Districtto</td>
-						<td>{{ $row->post_districtto }} </td>
-						
-					</tr>
-				
-					<tr>
-						<td width='30%' class='label-view text-right'>Post Addressto</td>
-						<td>{{ $row->post_addressto }} </td>
-						
-					</tr>
-				
-					<tr>
-						<td width='30%' class='label-view text-right'>Post Datestar</td>
-						<td>{{ $row->post_datestar }} </td>
+						<td width='30%' class='label-view text-right'>Ngày xuất phát</td>
+						<td>{{date('d-m-Y',$row->post_datestar)}} </td>
 						
 					</tr>
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Post Price</td>
-						<td>{{ $row->post_price }} </td>
+						<td>{{number_format($row->post_price,0,',','.') }} VNĐ </td>
 						
 					</tr>
 				
@@ -102,44 +78,44 @@
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Post File1</td>
+						<td width='30%' class='label-view text-right'>Tập tin đính kèm 1</td>
 						<td>{{ $row->post_file1 }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Post File2</td>
+						<td width='30%' class='label-view text-right'>Tập tin đính kèm 2</td>
 						<td>{{ $row->post_file2 }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Name</td>
+						<td width='30%' class='label-view text-right'>Tên</td>
 						<td>{{ $row->name }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Phone</td>
+						<td width='30%' class='label-view text-right'>Điện thoại</td>
 						<td>{{ $row->phone }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Address</td>
+						<td width='30%' class='label-view text-right'>Địa chỉ</td>
 						<td>{{ $row->address }} </td>
 						
 					</tr>
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Created</td>
-						<td>{{ $row->created }} </td>
+						<td>{{date('Y-m-d',$row->created)}} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Status</td>
-						<td>{{ $row->status }} </td>
+						<td width='30%' class='label-view text-right'>Trạng thái</td>
+						<td>@if($row->status == 1) {{ Lang::get('core.enable') }}  @else {{ Lang::get('core.disable') }}  @endif  </td>
 						
 					</tr>
 				

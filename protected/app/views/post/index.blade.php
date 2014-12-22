@@ -16,7 +16,7 @@
 	
 	<div class="page-content-wrapper">
     <div class="toolbar-line ">
-			@if($access['is_add'] ==1)
+			@if($access['is_add'] ==1 && 1 == 2)
 	   		<a href="{{ URL::to('post/add?md='.$masterdetail["filtermd"].$trackUri) }}" class="tips btn btn-xs btn-info"  title="{{ Lang::get('core.btn_create') }}">
 			<i class="icon-plus-circle2"></i>&nbsp;{{ Lang::get('core.btn_create') }}</a>
 			@endif  
@@ -24,11 +24,11 @@
 			<a href="javascript://ajax"  onclick="SximoDelete();" class="tips btn btn-xs btn-danger" title="{{ Lang::get('core.btn_remove') }}">
 			<i class="icon-bubble-trash"></i>&nbsp;{{ Lang::get('core.btn_remove') }}</a>
 			@endif 		
-			@if($access['is_excel'] ==1)
+			@if($access['is_excel'] ==1 && 1 == 2)
 			<a href="{{ URL::to('post/download?md='.$masterdetail["filtermd"]) }}" class="tips btn btn-xs btn-default" title="{{ Lang::get('core.btn_download') }}">
 			<i class="icon-folder-download2"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
 			@endif		
-		 	@if(Session::get('gid') ==1)
+		 	@if(Session::get('gid') ==1 && 1 == 2)
 			<a href="{{ URL::to('module/config/post') }}" class="tips btn btn-xs btn-default"  title="{{ Lang::get('core.btn_config') }}">
 			<i class="icon-cog"></i>&nbsp;{{ Lang::get('core.btn_config') }} </a>	
 			@endif  			
@@ -46,13 +46,11 @@
     <table class="table table-striped ">
         <thead>
 			<tr>
-				<th> No </th>
+				<th> {{ Lang::get('core.table_no') }} </th>
 				<th> <input type="checkbox" class="checkall" /></th>
 				
-				@foreach ($tableGrid as $t)
-					@if($t['view'] =='1')
+				@foreach ($test as $t)
 						<th>{{ $t['label'] }}</th>
-					@endif
 				@endforeach
 				<th>{{ Lang::get('core.btn_action') }}</th>
 			  </tr>
@@ -62,12 +60,10 @@
 			<tr id="sximo-quick-search" >
 				<td> # </td>
 				<td> </td>
-				@foreach ($tableGrid as $t)
-					@if($t['view'] =='1')
+				@foreach ($test as $t)
 					<td>						
-						{{ SiteHelpers::transForm($t['field'] , $tableForm) }}								
+						{{ SiteHelpers::transFormsearch($t) }}								
 					</td>
-					@endif
 				@endforeach
 				<td style="width:130px;">
 				<input type="hidden"  value="Search">
@@ -77,17 +73,10 @@
                 <tr>
 					<td width="50"> {{ ++$i }} </td>
 					<td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->post_id }}" />  </td>									
-				 @foreach ($tableGrid as $field)
-					 @if($field['view'] =='1')
+				 @foreach ($test as $field)
 					 <td>					 
-					 	@if($field['attribute']['image']['active'] =='1')
-							{{ SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) }}
-						@else	
-							{{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-							{{ SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) }}	
-						@endif						 
+					 	{{ SiteHelpers::transSelect($field,$row) }}
 					 </td>
-					 @endif					 
 				 @endforeach
 				 <td>
 				 	
@@ -113,8 +102,9 @@
     </table>
 	<input type="hidden" name="md" value="{{ $masterdetail['filtermd']}}" />
 	</div>
+	@include('footer_new')
 	{{ Form::close() }}
-	@include('footer')
+
 	
 	</div>	  
 </div>	
@@ -122,6 +112,11 @@
 $(document).ready(function(){
 
 	$('.do-quick-search').click(function(){
+		$('#SximoTable').attr('action','{{ URL::to("post/multisearch")}}');
+		$('#SximoTable').submit();
+	});
+
+	$("#filter_footer").click(function(){
 		$('#SximoTable').attr('action','{{ URL::to("post/multisearch")}}');
 		$('#SximoTable').submit();
 	});
