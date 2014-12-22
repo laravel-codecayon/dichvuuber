@@ -96,6 +96,17 @@ return array(
 			'recaptcha_response_field' => 'Mã bảo mật',
 			'newpassword' => 'Mật khẩu mới',
 			'confirmpassword' => 'Nhập lại mật khẩu',
+			'post_typecustomer' => 'Loại khách hàng',
+			'post_provincefrom' => 'Tỉnh/Thành xuất phát',
+			'post_districtfrom' => 'Quận/Huyện xuất phát',
+			'post_provinceto' => 'Tỉnh/Thành đến',
+			'post_districtto' => 'Quận/Huyện đến',
+			'post_addressfrom' => 'Địa chỉ xuất phát',
+			'post_addressto' => 'Địa chỉ đến',
+			'post_datestar' => 'Ngày xuất phát ',
+			'post_note' => 'Ghi chú',
+			'post_subject' => 'Tiêu đề',
+			'post_typecar' => 'Loại xe',
 		),
 
 );

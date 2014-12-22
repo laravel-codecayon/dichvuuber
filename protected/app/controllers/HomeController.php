@@ -255,7 +255,7 @@ class HomeController extends BaseController {
 		}else{
 			return Redirect::to('change-pass.html')->with('message_changepass', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->withErrors($validator)->withInput();
 		}
-		$rules = $rules=array(
+		/*$rules = $rules=array(
 			"type_customer" => "required|Numeric",
 			"subject" => "required",
 			"subject" => "required|alpha_num|between:5,15",
@@ -272,7 +272,7 @@ class HomeController extends BaseController {
 
 		}else{
 
-		}
+		}*/
 
 	}
 
@@ -289,14 +289,65 @@ class HomeController extends BaseController {
 		$this->data['pageNote'] = CNF_APPNAME;
 		$page = 'pages.template.dangtin';
 
+		$input = array(
+				'post_typecustomer'	=>'',
+				'post_subject'	=>'',
+				'post_provincefrom'	=>'79',
+				'post_districtfrom'	=>'',
+				'post_addressfrom'	=>'',
+				'post_provinceto'	=>'79',
+				'post_districtto'	=>'',
+				'post_addressto'	=>'',
+				'post_datestar'	=>'',
+				'post_price'	=>'0',
+				'post_typecar'	=>'',
+				'post_note'	=>'',
+				'name'	=>'',
+				'phone'	=>'',
+				'address'	=>'',
+			);
+		if(Session::has('input_rd')){
+			$input = Session::get('input_rd');
+		}
+		$data['input'] = $input;
 
 		$page = SiteHelpers::renderHtml($page);
-		$this->layout->nest('content',$page)->with('page', $this->data)->with('menu','dangtin');
+		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','dangtin');
 	}
 
 	public function postDangtin(){
 		if(!Session::has('customer')){
 			return Redirect::to('home/dangnhap');
+		}
+		$rules = array(
+				'post_typecustomer'		=>'required|Numeric',
+				'post_subject'			=>'required',
+				'post_provincefrom'		=>'required|Numeric',
+				'post_districtfrom'		=>'required|Numeric',
+				'post_addressfrom'		=>'required',
+				'post_provinceto'		=>'required|Numeric',
+				'post_districtto'		=>'required|Numeric',
+				'post_addressto'		=>'required',
+				'post_datestar'			=>'required',
+				'post_price'			=>'required|Numeric',
+				'post_typecar'			=>'required',
+				'post_note'				=>'required',
+				'name'					=>'required',
+				'phone'					=>'required',
+				'address'				=>'required',
+		);
+		$validator = Validator::make(Input::all(), $rules);	
+		if ($validator->passes()) 
+		{
+			$data = $this->getDataPost('post');
+			$data['created'] = time();
+			$data['post_datestar'] = strtotime($data['post_datestar']);
+			unset($data['lang']);
+			$mdPost = new Post();
+			$ID = $mdPost->insertRow($data , '');
+			echo "asdasd";die;
+		}else{
+			return Redirect::to('dang-tin.html')->with('message_dangtin', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->with('input_rd',Input::all())->withErrors($validator)->withInput();
 		}
 
 	}

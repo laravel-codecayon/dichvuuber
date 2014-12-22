@@ -9,4 +9,5 @@
 					Route::controller('articles', 'ArticlesController');
 					Route::controller('order', 'OrderController');
 					Route::controller('Customer', 'CustomerController');
+					Route::controller('post', 'PostController');
 					?>

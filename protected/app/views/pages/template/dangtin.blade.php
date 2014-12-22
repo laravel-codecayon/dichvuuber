@@ -1,91 +1,80 @@
+{{ HTML::script('sximo/themes/shop/js/jquery.jcombo.min.js') }}
 <div class="container">
 			<div class="box new-post">
                 <h2>Đăng tin miễn phí</h2>
                 <p>Vậy còn chờ gì ? Hãy tham gia ngay!</p>
+                @if(Session::has('message_dangtin'))
+                     {{ Session::get('message_dangtin') }}
+                @endif
+                <ul class="parsley-error-list">
+                  @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
                 <form method="post" action="{{URL::to('')}}/home/dangtin" enctype="multipart/form-data">
                 	<div class="input-group">
                       <label>Bạn là </label>
-                      <label class="type left"><span><input type="radio" name="type_customer" value="1"></span> Hành khách</label>
+                      <label class="type left"><span><input type="radio" name="post_typecustomer" value="1"></span> Hành khách</label>
                       <span> hay </span>
-                      <label class="type right"><span><input type="radio" name="type_customer" value="0"></span> Tài xế</label>
+                      <label class="type right"><span><input type="radio" name="post_typecustomer" value="0"></span> Tài xế</label>
                     </div>
                     <div class="devide clearfix"></div>
                     <div class="input-group">
                       <label>Tiêu đề</label>
-                      <input type="text" name="subject" class="form-control">
+                      <input type="text" name="post_subject" class="form-control">
                     </div>
                     <div class="devide clearfix"></div>
                     <div class="place">
                     	 <div class="input-group place">
                           	<label>Nơi xuất phát</label>
-                          	<select name="province_from" class="form-control">
-                              <option>Tỉnh / Thành</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
+                          	<select id="city_from" name="post_provincefrom" class="form-control">
                           	</select>
-                          	<select name="district_from" class="form-control">
-                              <option>Quận / huyện</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
+                          	<select id="district_from" name="post_districtfrom" class="form-control">
                           	</select>
-                          	<input type="text" class="form-control" name="address_from" placeholder="Địa chỉ chi tiết">
+                          	<input type="text" class="form-control" name="post_addressfrom" placeholder="Địa chỉ chi tiết">
                       	</div>
                     </div><!-- place -->
                     <div class="devide clearfix"></div>
                     <div class="place">
                     	 <div class="input-group place">
                           	<label>Nơi đến</label>
-                          	<select name="province_yo" class="form-control">
-                              <option>Tỉnh / Thành</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
+                          	<select id="city_to" name="post_provinceto" class="form-control">
                           	</select>
-                          	<select name="district_to" class="form-control">
-                              <option>Quận huyện</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
+                          	<select id="district_to" name="post_districtto" class="form-control">
                           	</select>
-                          	<input type="text" class="form-control" name="address_to" placeholder="Địa chỉ chi tiết">
+                          	<input type="text" class="form-control" name="post_addressto" placeholder="Địa chỉ chi tiết">
                       	</div>
                     </div><!-- place -->
                     <div class="devide clearfix"></div>
                  	<div class="input-group date">
                     <label>Ngày xuất phát</label>
-                        <input name="date_star" type="text" data-beatpicker="true" data-beatpicker-format="['DD','MM','YYYY'],separator:'/'" data-beatpicker-position="['right','bottom']" data-beatpicker-disable="{from:[1970 , 2 , 2],to:[{{date("Y")}} , {{date("m")}}  , <?php echo (date("d") -1 ) ?> ]}"/>
+                        <input name="post_datestar" type="text" data-beatpicker="true" data-beatpicker-format="['DD','MM','YYYY'],separator:'/'" data-beatpicker-position="['right','bottom']" data-beatpicker-disable="{from:[1970 , 2 , 2],to:[{{date("Y")}} , {{date("m")}}  , <?php echo (date("d") -1 ) ?> ]}"/>
                 	</div>
                     <div class="devide clearfix"></div>
                     <div class="column left">
                    		<div class="input-group">
                           <label>Giá</label>
-                          <input name="price" type="text" class="form-control" value="0">
+                          <input name="post_price" type="text" class="form-control" value="0">
                         </div>
                     </div><!-- column -->
                     <div class="column right">
                         <div class="input-group">
                           <label>Loại xe</label>
-                          <input name="type_car" type="text" class="form-control">
+                          <input name="post_typecar" type="text" class="form-control">
                         </div>
                     </div><!-- column -->
                     <div class="devide clearfix"></div>
                     <div class="column left">
                    		<div class="input-group">
                           <label>Ghi chú thêm</label>
-                          <textarea name="note"></textarea>
+                          <textarea name="post_note"></textarea>
                         </div>
                     </div><!-- column -->
                     <div class="column right">
                    		<div class="input-group">
                           <label>Đính kèm file</label>
-                          <input type="file" name="file1">
-                          <input type="file" name="file2">
+                          <input type="file" name="post_file1">
+                          <input type="file" name="post_file2">
                         </div>
                     </div><!-- column -->
                     <div class="devide clearfix"></div>
@@ -95,8 +84,16 @@
                         	<tr><td>Tên</td><td><input type="text" class="form-control" value="" name="name"></td></tr>
                             <tr><td>Số điện thoại</td><td><input type="text" class="form-control" value="" name="phone"></td></tr>
                             <tr><td>Địa chỉ</td><td><input type="text" class="form-control" value="" name="address"></td></tr>
-                            <tr><td>Tỉnh/Thành</td><td><input type="text" class="form-control" value="" name="address"></td></tr>
-                            <tr><td>Quận/Huyện</td><td><input type="text" class="form-control" value="" name="address"></td></tr>
+                        </table>
+                    </div><!-- info-user -->
+                    <div class="box info-user">
+                      <label>Mã bảo mật</label>
+                      <table>
+                          <tr><td> @if(CNF_RECAPTCHA =='true') 
+
+                        {{ Form::captcha(array('theme' => 'white')); }}
+
+                      @endif</td></tr>
                         </table>
                     </div><!-- info-user -->
                     <div class="devide clearfix"></div>
@@ -106,3 +103,21 @@
         </div><!-- container -->
         {{ HTML::style('sximo/themes/uber/css/BeatPicker.min.css')}}
         {{ HTML::script('sximo/themes/uber/js/BeatPicker.min.js') }}
+        <script type="text/javascript">
+          $(document).ready(function() { 
+            $("#city_from").jCombo("{{ URL::to('ward/comboselect?filter=province:provinceid:name') }}",
+            {  selected_value : "{{$input['post_provincefrom']}}" });
+            $("#city_from").on('change', function() {
+              var val = this.value ; 
+              $("#district_from").jCombo("{{ URL::to('ward/comboselect?filter=district:districtid:name:') }}"+val,
+            {  selected_value : "{{$input['post_districtfrom']}}" });
+            });
+            $("#city_to").jCombo("{{ URL::to('ward/comboselect?filter=province:provinceid:name') }}",
+            {  selected_value : "{{$input['post_provinceto']}}" });
+            $("#city_to").on('change', function() {
+              var val = this.value ; 
+              $("#district_to").jCombo("{{ URL::to('ward/comboselect?filter=district:districtid:name:') }}"+val,
+            {  selected_value : "{{$input['post_districtto']}}" });
+            });
+          });
+        </script>
