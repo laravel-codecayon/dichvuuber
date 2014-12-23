@@ -25,12 +25,8 @@
 	<header id="header">
     	<div class="container">
             <div id="logo"><a href="<?php echo URL::to(''); ?>"><img src="<?php echo asset('sximo/themes/uber/image/logo.png'); ?>"></a></div>
-            <div class="links">
-                <a href="#">Trang chủ</a>
-                <a href="#">Giới thiệu</a>
-                <a href="#">Trợ giúp</a>
-                <a href="#">Liên hệ</a>
-            </div><!-- links -->
+            <?php echo $__env->make('layouts/uber/topbar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            
          </div><!-- container -->
 	</header>
   <?php if(Session::has('message')): ?>
@@ -40,9 +36,9 @@
     	<div class="container">
         	<ul class="menu">
             	<li class="home"><a href="<?php echo URL::to(''); ?>"><img src="<?php echo asset('sximo/themes/uber/image/home-icon.png'); ?>"></a></li>
-                <li><a href="#">Tin mới đăng</a></li>
-                <li><a href="#">Hành khách</a></li>
-                <li><a href="#">Tài xế</a></li>
+                <li><a href="<?php echo URL::to(''); ?>/tin-moi-dang.html">Tin mới đăng</a></li>
+                <li><a href="<?php echo URL::to(''); ?>/hanh-khach.html">Hành khách</a></li>
+                <li><a href="<?php echo URL::to(''); ?>/tai-xe.html">Tài xế</a></li>
             </ul>
             <ul class="member-area">
             	<li <?php if(isset($menu) && $menu == "dangky"): ?> class="post-thread" <?php endif; ?> ><a href="<?php echo URL::to('dang-ky.html'); ?>">Đăng ký</a></li>

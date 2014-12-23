@@ -14,7 +14,7 @@ class HomeController extends BaseController {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
-	protected  $perpage = 12;
+	protected  $perpage = 2;
 
 	public function __construct() {
 
@@ -326,13 +326,13 @@ class HomeController extends BaseController {
 				'post_subject'			=>'required',
 				'post_provincefrom'		=>'required|Numeric',
 				'post_districtfrom'		=>'required|Numeric',
-				'post_addressfrom'		=>'required',
+				//'post_addressfrom'		=>'required',
 				'post_provinceto'		=>'required|Numeric',
 				'post_districtto'		=>'required|Numeric',
-				'post_addressto'		=>'required',
+				//'post_addressto'		=>'required',
 				'post_datestar'			=>'required',
 				'post_price'			=>'required|Numeric',
-				'post_typecar'			=>'required',
+				//'post_typecar'			=>'required',
 				'post_note'				=>'required',
 				'name'					=>'required',
 				'phone'					=>'required',
@@ -347,6 +347,7 @@ class HomeController extends BaseController {
 			$data = $this->getDataPost('post');
 			$data['created'] = time();
 			$data['post_datestar'] = strtotime($data['post_datestar']);
+			$data['post_slug'] = SiteHelpers::seoUrl(trim($data['post_subject']));
 			unset($data['lang']);
 			if(!is_null(Input::file('post_file1')))
 			{
@@ -401,10 +402,10 @@ class HomeController extends BaseController {
 		$sort = 'post_id';
 		$order = 'desc';
 		$filter = " AND status = 1 AND active = 1 ";
-		$page = (!is_null(Input::get('page') && Input::get('page') != '')) ? Input::get('page') : 1;
+		$page = (!is_null(Input::get('page')) && Input::get('page') != '') ? Input::get('page') : "1";
 		$params = array(
 			'page'		=> $page ,
-			'limit'		=> (!is_null(Input::get('numpage')) ? filter_var(Input::get('numpage'),FILTER_VALIDATE_INT) : $this->perpage ) ,
+			'limit'		=> ( $this->perpage ) ,
 			'sort'		=> $sort ,
 			'order'		=> $order,
 			'params'	=> $filter,

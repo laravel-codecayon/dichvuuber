@@ -14,9 +14,9 @@
                 <form method="post" action="{{URL::to('')}}/home/dangtin" enctype="multipart/form-data">
                 	<div class="input-group">
                       <label>Bạn là </label>
-                      <label class="type left"><span><input type="radio" name="post_typecustomer" @if($input['post_typecustomer'] == 1) checked @endif value="1"></span> Hành khách</label>
+                      <label class="type left"><span><input type="radio" name="post_typecustomer" @if($input['post_typecustomer'] == 1 && $input['post_typecustomer'] != '') checked @endif value="1"></span> Hành khách</label>
                       <span> hay </span>
-                      <label class="type right"><span><input type="radio" name="post_typecustomer" @if($input['post_typecustomer'] == 0) checked @endif value="0"></span> Tài xế</label>
+                      <label class="type right"><span><input type="radio" name="post_typecustomer" @if($input['post_typecustomer'] == 0 && $input['post_typecustomer'] != '') checked @endif value="0"></span> Tài xế</label>
                     </div>
                     <div class="devide clearfix"></div>
                     <div class="input-group">

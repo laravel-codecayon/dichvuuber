@@ -123,35 +123,22 @@ class SiteHelpers
 		return $sex == 1 ? "Nam" : "Nu";
 	}
 
-	public static function templateProduct($data = "")
+	public static function templatePost($data = "")
 	{
-		$image = $data->image == '' ? URL::to('').'/sximo/images/no_pic.png' : URL::to('').'/uploads/products/thumb/'.$data->image;
-		if($data->id_promotion == 0)
-		{
-			$price = '<span class="price-new">'.number_format($data->UnitPrice,0,',','.') . 'VNĐ</span>';
-		}
-		else
-		{
-			$promotion = DB::table('promotion')->where('status','=',1)->where('id_promotion','=',$data->id_promotion)->first();
-			if(count($promotion) >= 1){
-				$pri = $promotion->type == 1 ? $data->UnitPrice - $promotion->promotion : $data->UnitPrice - ($data->UnitPrice * $promotion->promotion/100);
-				$price = '<span class="price-old">'.number_format($data->UnitPrice,0,',','.') . 'VNĐ</span><br/>';
-				$price .= '<span class="price-new">'.number_format($pri,0,',','.') . 'VNĐ</span>';
-			}
-			else{
-				$price = '<span class="price-new">'.number_format($data->UnitPrice,0,',','.') . 'VNĐ</span>';
-			}
-		}
+		$image = $data->post_typecustomer == '1' ?  asset('sximo/themes/uber/image/guest-icon.png') : asset('sximo/themes/uber/image/driver-icon.png');
+		$link = URL::to('')."/tin/".$data->post_slug."-".$data->post_id.".html";
 		$output = '';
-		$output .=	'<div>';
-        $output .=   '<div class="image"><a title="'.$data->ProductName.'" href="'.URL::to('').'/detail/'.$data->slug.'-'.$data->ProductID.'.html"><img src="'.$image.'" alt="'.$data->ProductName.'" /></a></div>';
-        $output .=   '<div class="description" style="display:none;"> '.$data->description.' </div>';
-        $output .=   '<div class="name"><a title="'.$data->ProductName.'" href="'.URL::to('').'/detail/'.$data->slug.'-'.$data->ProductID.'.html">'.$data->ProductName.'</a></div>';
-        $output .=   '<div class="price"> '.$price.' </div>';
-        $output .=   '<div class="cart">';
-        $output .=   '<input type="button" value="Add to Cart" onClick="addcart('.$data->ProductID.',1);" class="button" />';
-        $output .=   '</div>';
-        $output .=   '</div>';
+		$output .= '<li>';
+		$output .= '<a href="'.$link.'">';
+	    $output .= '<img src="'.$image.'">';
+	    $output .=  '<div class="title">'.$data->post_subject.'</div>';
+	    $output .=  '<div class="trip">';
+	    $output .=  '<span class="start-place">Nơi đi : <b>'.self::getNameaddress($data->post_districtfrom,'district','districtid').', '.self::getNameaddress($data->post_provincefrom,'province','provinceid').'</b></span>';
+	    $output .=  '<span class="end-place">Nơi đến : <b>'.self::getNameaddress($data->post_districtto,'district','districtid').', '.self::getNameaddress($data->post_provinceto,'province','provinceid').'</b></span>';
+	    $output .=  '<span class="start-date">Ngày xuất phát : <b>'.date('d-m-Y',$data->post_datestar).'</b></span>';
+	    $output .=  '</div>';
+	    $output .=  '</a>';
+        $output .=  '</li>';
         return $output;
 	}
 

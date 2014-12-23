@@ -1,130 +1,15 @@
 <div class="container">
             <div id="wrap-content">
                 <div class="box thread-box guest">
-                    <div class="box-heading"><span>Hành khách</span></div>
+                    <div class="box-heading"><span>Tin mới</span></div>
                     <ul>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
-                    <li><a href="#">
-                        <img src="images/guest-icon.png">
-                        <div class="title">Cần 1 tài xế chở từ Tp.HCM đi Biên Hòa</div>
-                        <div class="trip">
-                            <span class="start-place">Nơi đi : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="end-place">Nơi đến : <b>Q.Thủ Đức, Tp.HCM</b></span>
-                            <span class="start-date">Ngày xuất phát : <b>02 / 08 / 2012</b></span>
-                        </div>
-                    </a></li>
+                    @foreach($data as $item)
+                        {{ SiteHelpers::templatePost($item) }}
+                    @endforeach
                     </ul>
                 </div><!-- guest-list -->
                 <div class="pages">
-                    <ul class="pagination">
-                        <li class="first-page"><a href="#">Trang đầu</a></li>
-                        <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
-                        <li class="last-page"><a href="#">Trang cuối</a></li>
-                    </ul>
+                    {{ $pagination->appends(array("page"=>$page))->links('pagination_site') }}
                 </div><!-- pages -->
             </div><!-- wrap-content -->
             <div id="wrap-right">
