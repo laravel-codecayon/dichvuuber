@@ -43,9 +43,9 @@
 	 	<div class="clr"></div>
 		
 	</div>	
-	<p class="text-center"><a  id="or"  href="javascript://ajax"><small>Forgot password?</small></a></p>
+	<!--<p class="text-center"><a  id="or"  href="javascript://ajax"><small>Forgot password?</small></a></p>
 	<p class="text-muted text-center">Do not have an account?</p>
-				@if(CNF_REGIST =='true') 
+				@if(CNF_REGIST =='true' && 1== 2) 
 		  		<a class="btn btn-default btn-white btn-white btn-block"  href="{{ URL::to('user/register')}}"> Create an account </a>
 			@endif	
 		<div class="form-group has-feedback text-center">
@@ -63,7 +63,7 @@
 			@if($twit_enabled =='true') 
 			<a href="{{ URL::to('user/twitter')}}" class="btn btn-info"><i class="fa fa-twitter"></i> Twitter </a>
 			@endif
-		</div>
+		</div>-->
 	  <p style="padding:10px 0" class="text-center">
 	  <a href="{{ URL::to('')}}"> Back to Site </a>  
    		</p>			

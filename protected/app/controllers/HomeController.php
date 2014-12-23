@@ -380,13 +380,13 @@ class HomeController extends BaseController {
 
 	}
 
-	/*public function page($id){
+	public function page($id){
 		$mdPage = new Pages();
 		$item = $mdPage->find($id);
 
 		$data['page'] = $item;
 		$this->data['pageTitle'] = $item->title;
-		$this->data['pageNote'] = 'Welcome To Our Site';
+		$this->data['pageNote'] = CNF_APPNAME;
 
 		//$this->data['breadcrumb'] = 'inactive';
 		$page = 'pages.template.index';
@@ -396,7 +396,42 @@ class HomeController extends BaseController {
 		$this->layout->nest('content',$page,$data)->with('page', $this->data);
 	}
 
-	public function cart()
+	public function tinmoi (){
+		
+		$sort = 'post_id';
+		$order = 'desc';
+		$filter = " AND status = 1 AND active = 1 ";
+		$page = (!is_null(Input::get('page') && Input::get('page') != '')) ? Input::get('page') : 1;
+		$params = array(
+			'page'		=> $page ,
+			'limit'		=> (!is_null(Input::get('numpage')) ? filter_var(Input::get('numpage'),FILTER_VALIDATE_INT) : $this->perpage ) ,
+			'sort'		=> $sort ,
+			'order'		=> $order,
+			'params'	=> $filter,
+			//'global'	=> (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
+		);
+		$model = new Post();
+		$results = $model->getRows( $params );
+		// Build pagination setting
+		$page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;	
+		$pagination = Paginator::make($results['rows'], $results['total'],$params['limit']);
+		$data['data']		= $results['rows'];
+		$data['page']		= $page;
+		$data['numpage']	= $params['limit'];
+		// Build Pagination 
+		$data['pagination']	= $pagination;
+		// Build pager number and append current param GET
+		$data['pager'] 		= $this->injectPaginate();
+
+
+		$this->data['pageTitle'] = "Tin mới đăng";
+		$this->data['pageNote'] = CNF_APPNAME;
+		$page = 'pages.template.tinmoi';
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','tinmoi');
+	}
+
+	/*public function cart()
 	{
 		$cart = Session::get('addcart');
 		if(count($cart) <= 0){

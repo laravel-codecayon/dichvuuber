@@ -110,6 +110,8 @@ return array(
 			'post_file1' => 'Tập tin',
 			'post_file2' => 'Tập tin',
 			'post_price' => 'Giá',
+			'content' => 'Nội dung',
+			'subject' => 'Tiêu đề',
 		),
 
 );

@@ -25,12 +25,8 @@
 	<header id="header">
     	<div class="container">
             <div id="logo"><a href="{{URL::to('')}}"><img src="{{ asset('sximo/themes/uber/image/logo.png')}}"></a></div>
-            <div class="links">
-                <a href="#">Trang chủ</a>
-                <a href="#">Giới thiệu</a>
-                <a href="#">Trợ giúp</a>
-                <a href="#">Liên hệ</a>
-            </div><!-- links -->
+            @include('layouts/uber/topbar')
+            
          </div><!-- container -->
 	</header>
   @if(Session::has('message'))
@@ -40,9 +36,9 @@
     	<div class="container">
         	<ul class="menu">
             	<li class="home"><a href="{{URL::to('')}}"><img src="{{ asset('sximo/themes/uber/image/home-icon.png')}}"></a></li>
-                <li><a href="#">Tin mới đăng</a></li>
-                <li><a href="#">Hành khách</a></li>
-                <li><a href="#">Tài xế</a></li>
+                <li><a href="{{URL::to('')}}/tin-moi-dang.html">Tin mới đăng</a></li>
+                <li><a href="{{URL::to('')}}/hanh-khach.html">Hành khách</a></li>
+                <li><a href="{{URL::to('')}}/tai-xe.html">Tài xế</a></li>
             </ul>
             <ul class="member-area">
             	<li @if(isset($menu) && $menu == "dangky") class="post-thread" @endif ><a href="{{URL::to('dang-ky.html')}}">Đăng ký</a></li>

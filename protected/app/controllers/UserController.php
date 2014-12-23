@@ -164,11 +164,9 @@ class UserController extends BaseController {
 						Session::put('ll', $row->last_login);
 						Session::put('fid', $row->first_name.' '. $row->last_name);	
 						Session::put('lang', Input::get('lang'));
-						if(CNF_FRONT =='false') :
-							return Redirect::to('dashboard');						
-						else :
-							return Redirect::to('');
-						endif;							
+
+						return Redirect::to('dashboard');						
+							
 											
 					}			
 					

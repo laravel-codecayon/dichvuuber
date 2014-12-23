@@ -9,6 +9,7 @@
 		<p>
 			Email : {{ $email }} <br />
 			Tên : {{ $name }}<br />
+			Điện thoại : {{ $phone }}<br />
 			Tiêu đề : {{ $subject }}<br />
 		</p>
 		<p> Nội dung : </p>

@@ -24,6 +24,7 @@ Route::controller('user', 'UserController');
 //Route::get('detail/{alias}-{id}.html', 'HomeController@productdetail')->where(array('alias' => '(.*)','id'=>'[0-9]+'));
 //Route::get('search.html', 'HomeController@search');
 //Route::get('checkout.html', 'HomeController@checkout');
+Route::get('tin-moi-dang.html', 'HomeController@tinmoi');
 Route::get('dang-ky.html', 'HomeController@dangky');
 Route::get('dang-tin.html', 'HomeController@dangtin');
 Route::get('contact-us.html', 'HomeController@contactus');
