@@ -250,4 +250,5 @@ return array(
 	"customer_type"				=> "Loại khách hàng ",
 	"table_subject"				=> "Tiêu đề ",
 	"post_active"				=> "Kích hoạt ",
+	"config"					=> "Cài đặt ",
 );

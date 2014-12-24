@@ -55,6 +55,7 @@ class HomeController extends BaseController {
 	public function postDangky(){
 		$rules = Customer::$rules;
 		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
+
 		$validator = Validator::make(Input::all(), $rules);
 		if ($validator->passes()) {
 			$data = $this->getDataPost('customer');
@@ -63,6 +64,23 @@ class HomeController extends BaseController {
 			$data['password'] = md5($data['password']);
 			$data['code'] = md5(time());
 			$mdCus = new Customer();
+
+			if(!is_null(Input::file('file')))
+			{
+				$file = Input::file('file');
+				$destinationPath = './uploads/customer/';
+				$filename = $file->getClientOriginalName();
+				$extension = $file->getClientOriginalExtension(); //if you need extension of the file
+				$newfilename = time().'.'.$extension;
+				$uploadSuccess = Input::file('file')->move($destinationPath, $newfilename);
+				if( $uploadSuccess ) {
+				    $data['image'] = $newfilename;
+				    $orgFile = $destinationPath.'/'.$newfilename;
+				    $thumbFile = $destinationPath.'/thumb/'.$newfilename;
+				    SiteHelpers::resizewidth("193",$orgFile,$thumbFile);
+				}
+			}
+
 			$ID = $mdCus->insertRow($data , Input::get('customer_id'));
 			$data_message = array('name'=>Input::get('name'),'code'=>$data['code'],'email'=>Input::get('email'),'password'=>$data['password']); 
 			Mail::send('emails.dangky', $data_message, function($message)
@@ -115,7 +133,7 @@ class HomeController extends BaseController {
 		if ($validator->passes()) {
 			$cus = DB::table('customer')->where('username', '=',Input::get('username'))->where('password','=',md5(Input::get('password')))->first();
 			if(count($cus)>0){
-				$arr_cus = array('id'=>$cus->customer_id, 'name'=>$cus->name, "email"=>$cus->email);
+				$arr_cus = array('id'=>$cus->customer_id, 'name'=>$cus->name, "email"=>$cus->email, 'image'=>$cus->image);
 				Session::put('customer',$arr_cus);
 				Session::save();
 				return Redirect::to('');
@@ -202,6 +220,7 @@ class HomeController extends BaseController {
 			"provinceid" => "required",
 			"districtid" => "required",
 			"wardid" => "required",
+			'file'	=>'mimes:gif,png,jpg,jpeg|max:20000',
 		);
 		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
 		$validator = Validator::make(Input::all(), $rules);
@@ -212,6 +231,26 @@ class HomeController extends BaseController {
 			$data['provinceid'] = Input::get('provinceid');
 			$data['districtid'] = Input::get('districtid');
 			$data['wardid'] = Input::get('wardid');
+			if(!is_null(Input::file('file')))
+			{
+				$file = Input::file('file');
+				$destinationPath = './uploads/customer/';
+				$filename = $file->getClientOriginalName();
+				$extension = $file->getClientOriginalExtension(); //if you need extension of the file
+				$newfilename = time().'.'.$extension;
+				$uploadSuccess = Input::file('file')->move($destinationPath, $newfilename);
+				if( $uploadSuccess ) {
+				    $data['image'] = $newfilename;
+				    $orgFile = $destinationPath.'/'.$newfilename;
+				    $thumbFile = $destinationPath.'/thumb/'.$newfilename;
+				    SiteHelpers::resizewidth("193",$orgFile,$thumbFile);
+				    $ses_cus = Session::get('customer');
+				    if($ses_cus['image'] != ''){
+				    	@unlink(ROOT .'/uploads/customer/'.$ses_cus['image']);
+				    	@unlink(ROOT .'/uploads/customer/thumb/'.$ses_cus['image']);
+				    }
+				}
+			}
 			DB::table('customer')->where('email','=',Input::get('email'))->where('username','=',Input::get('username'))->update($data);
 			return Redirect::to('change-info.html')->with('message', SiteHelpers::alert('success','Thay đổi thông tin thành công !'));
 		}else{
@@ -344,10 +383,12 @@ class HomeController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);	
 		if ($validator->passes()) 
 		{
+			$ses_cus = Session::get('customer');
 			$data = $this->getDataPost('post');
 			$data['created'] = time();
 			$data['post_datestar'] = strtotime($data['post_datestar']);
 			$data['post_slug'] = SiteHelpers::seoUrl(trim($data['post_subject']));
+			$data['customer_id'] = $ses_cus['id'];
 			unset($data['lang']);
 			if(!is_null(Input::file('post_file1')))
 			{
@@ -590,7 +631,7 @@ class HomeController extends BaseController {
 		$page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;	
 		$pagination = Paginator::make($results['rows'], $results['total'],$params['limit']);
 		$data['order'] 		= $data_order;
-		$data['province']	= $data_province->name;
+		$data['province']	= $data_province;
 		$data['data']		= $results['rows'];
 		$data['page']		= $page;
 		$data['numpage']	= $params['limit'];
@@ -605,6 +646,31 @@ class HomeController extends BaseController {
 		$page = 'pages.template.tinhthanh';
 		$page = SiteHelpers::renderHtml($page);
 		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','tinhthanh');
+	}
+
+	public function detailpost($alias = '', $id = ''){
+		$post = DB::table('post')->where('post_id','=',$id)->first();
+		$data['customer'] = DB::table('customer')->where('customer_id','=',$post->customer_id)->first();
+		$data['post'] = $post;
+		$this->data['pageTitle'] = $post->post_subject;
+		$this->data['pageNote'] = CNF_APPNAME;
+		$page = 'pages.template.detailpost';
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','detailpost');
+	}
+
+	public function getViewfile($file = ''){
+		$url = URL::to('').'/uploads/files/'.$file;
+		header('Content-Description: Thông tin bài đăng');
+	    //header('Content-Type: application/octet-stream');
+	    //header('Content-Disposition: attachment; filename='.basename($file));
+	    header('Expires: 0');
+	    header('Cache-Control: must-revalidate');
+	    header('Pragma: public');
+	   // header('Content-Length: ' . filesize($url));
+	    //readfile($url);
+		header('Location: ' . $url);
+		die;
 	}
 
 	/*public function cart()

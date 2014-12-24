@@ -10,7 +10,8 @@
                     <li><?php echo $error; ?></li>
                   <?php endforeach; ?>
                 </ul>
-                <form  method="post" action="<?php echo URL::to('home/changeinfo'); ?>">
+                <form  method="post" action="<?php echo URL::to('home/changeinfo'); ?>" enctype="multipart/form-data">
+                  <input type="hidden"/>
                 	<div class="group-name">Thông tin tài khoản</div>
                     <div class="input-group">
                       <span class="input-group-addon">Tài khoản</span>
@@ -54,6 +55,15 @@
                       <span class="input-group-addon">Phường/Xã</span>
                       <select name="wardid" id="ward" class="form-control">
                       </select>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon">Ảnh đại diện</span>
+                      <input type="file" class="form-control" name="file" >
+                      <?php if($input['image'] != ""): ?>
+                        <img src="<?php echo URL::to(''); ?>/uploads/customer/thumb/<?php echo $input['image']; ?>">
+                      <?php else: ?>if
+                        <img src="<?php echo asset('sximo/themes/uber/image/no-avatar.jpg'); ?>">
+                      <?php endif; ?>
                     </div>
                     <div class="input-group">
                       <span class="input-group-addon">Mã bảo mật</span>

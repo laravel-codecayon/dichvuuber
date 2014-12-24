@@ -10,7 +10,7 @@
                     <li>{{ $error }}</li>
                   @endforeach
                 </ul>
-                <form  method="post" action="{{URL::to('home/changeinfo')}}">
+                <form  method="post" action="{{URL::to('home/changeinfo')}}" enctype="multipart/form-data">
                   <input type="hidden"/>
                 	<div class="group-name">Thông tin tài khoản</div>
                     <div class="input-group">
@@ -55,6 +55,15 @@
                       <span class="input-group-addon">Phường/Xã</span>
                       <select name="wardid" id="ward" class="form-control">
                       </select>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon">Ảnh đại diện</span>
+                      <input type="file" class="form-control" name="file" >
+                      @if($input['image'] != "")
+                        <img src="{{URL::to('')}}/uploads/customer/thumb/{{$input['image']}}">
+                      @elseif
+                        <img src="{{ asset('sximo/themes/uber/image/no-avatar.jpg')}}">
+                      @endif
                     </div>
                     <div class="input-group">
                       <span class="input-group-addon">Mã bảo mật</span>

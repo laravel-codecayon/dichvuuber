@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+    <title><?php echo isset($page['pageTitle']) ? $page['pageTitle'].' | '.$page['pageNote']. " | ". CNF_APPNAME : CNF_APPNAME ;?></title>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="<?php echo CNF_METAKEY; ?>">
+    <meta name="description" content="<?php echo CNF_METADESC; ?>">
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
@@ -35,10 +38,10 @@
     <nav id="nav">
     	<div class="container">
         	<ul class="menu">
-            	<li class="home"><a href="<?php echo URL::to(''); ?>"><img src="<?php echo asset('sximo/themes/uber/image/home-icon.png'); ?>"></a></li>
-                <li><a href="<?php echo URL::to(''); ?>/tin-moi-dang.html">Tin mới đăng</a></li>
-                <li><a href="<?php echo URL::to(''); ?>/hanh-khach.html">Hành khách</a></li>
-                <li><a href="<?php echo URL::to(''); ?>/tai-xe.html">Tài xế</a></li>
+            	<li <?php if(isset($menu) && $menu == "index"): ?> class="post-thread" <?php endif; ?>><a href="<?php echo URL::to(''); ?>"><img src="<?php echo asset('sximo/themes/uber/image/home-icon.png'); ?>"></a></li>
+                <li <?php if(isset($menu) && $menu == "tinmoi"): ?> class="post-thread" <?php endif; ?>><a href="<?php echo URL::to(''); ?>/tin-moi-dang.html">Tin mới đăng</a></li>
+                <li <?php if(isset($menu) && $menu == "hanhkhach"): ?> class="post-thread" <?php endif; ?>><a href="<?php echo URL::to(''); ?>/hanh-khach.html">Hành khách</a></li>
+                <li <?php if(isset($menu) && $menu == "taixe"): ?> class="post-thread" <?php endif; ?>><a href="<?php echo URL::to(''); ?>/tai-xe.html">Tài xế</a></li>
             </ul>
             <ul class="member-area">
             	<li <?php if(isset($menu) && $menu == "dangky"): ?> class="post-thread" <?php endif; ?> ><a href="<?php echo URL::to('dang-ky.html'); ?>">Đăng ký</a></li>
@@ -55,155 +58,13 @@
         </div>
     </section>
     <?php if(isset($menu) && $menu == "index" ): ?>
-    <section id="search">
-    	<div class="container search clearfix">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#guest" aria-controls="guest" role="tab" data-toggle="tab">Hành khách</a></li>
-                <li role="presentation"><a href="#driver" aria-controls="driver" role="tab" data-toggle="tab">Tài xế</a></li>
-            </ul>
-            
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active clearfix" id="guest">
-                	<div class="place start">
-                    	<span>Nơi đi</span>
-                        <select class="form-control">
-                          <option>Tỉnh / Thành</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                        <select class="form-control">
-                          <option>Quận / Huyện</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                    </div><!-- start-place -->
-                    <div class="place finish">
-                    	<span>Nơi đến</span>
-                        <select class="form-control">
-                          <option>Tỉnh / Thành</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                        <select class="form-control">
-                          <option>Quận / Huyện</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                    </div><!-- finish-place -->
-                    <button>Tìm kiếm</button>
-                </div>
-                <div role="tabpanel" class="tab-pane fade clearfix" id="driver">
-               	<div class="place start">
-                    	<span>Nơi đi</span>
-                        <select class="form-control">
-                          <option>Tỉnh / Thành</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                        <select class="form-control">
-                          <option>Quận / Huyện</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                    </div><!-- start-place -->
-                    <div class="place finish">
-                    	<span>Nơi đến</span>
-                        <select class="form-control">
-                          <option>Tỉnh / Thành</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                        <select class="form-control">
-                          <option>Quận / Huyện</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                    </div><!-- finish-place -->
-                    <button>Tìm kiếm</button>
-                </div>
-            </div>
-        </div><!-- container -->
-    </section>
+      <?php echo $__env->make('layouts/uber/timkiem', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <?php endif; ?>
     <main id="main">
     	<?php echo $content; ?>
     </main>
-     <?php if(isset($menu) && $menu == "index"): ?>
-    <section id="searchby-provinces">
-    	<div class="container">
-        	<div class="searchby-provinces box clearfix">
-                <div class="box-heading"><span>Tỉnh thành phổ biến</span></div>
-                <div class="row">
-                    <ul class="column column1">
-                        <li><a href="#">An Giang</a></li>
-                        <li><a href="#">Bà Rịa - Vũng Tàu</a></li>
-                        <li><a href="#">Bắc Giang</a></li>
-                        <li><a href="#">Bắc Kạn</a></li>
-                        <li><a href="#">Bạc Liêu</a></li>
-                        <li><a href="#">Bắc Ninh</a></li>
-                        <li><a href="#">Bến Tre</a></li>
-                        <li><a href="#">Bình Định</a></li>
-                        <li><a href="#">Bình Dương</a></li>
-                        <li><a href="#">Bình Phước</a></li>
-                    </ul><!-- column1 -->
-                    <ul class="column column2">
-                        <li><a href="#">An Giang</a></li>
-                        <li><a href="#">Bà Rịa - Vũng Tàu</a></li>
-                        <li><a href="#">Bắc Giang</a></li>
-                        <li><a href="#">Bắc Kạn</a></li>
-                        <li><a href="#">Bạc Liêu</a></li>
-                        <li><a href="#">Bắc Ninh</a></li>
-                        <li><a href="#">Bến Tre</a></li>
-                        <li><a href="#">Bình Định</a></li>
-                        <li><a href="#">Bình Dương</a></li>
-                        <li><a href="#">Bình Phước</a></li>
-                    </ul><!-- column2 -->
-                    <ul class="column column3">
-                        <li><a href="#">An Giang</a></li>
-                        <li><a href="#">Bà Rịa - Vũng Tàu</a></li>
-                        <li><a href="#">Bắc Giang</a></li>
-                        <li><a href="#">Bắc Kạn</a></li>
-                        <li><a href="#">Bạc Liêu</a></li>
-                        <li><a href="#">Bắc Ninh</a></li>
-                        <li><a href="#">Bến Tre</a></li>
-                        <li><a href="#">Bình Định</a></li>
-                        <li><a href="#">Bình Dương</a></li>
-                        <li><a href="#">Bình Phước</a></li>
-                    </ul><!-- column3 -->
-                    <ul class="column column4">
-                        <li><a href="#">An Giang</a></li>
-                        <li><a href="#">Bà Rịa - Vũng Tàu</a></li>
-                        <li><a href="#">Bắc Giang</a></li>
-                        <li><a href="#">Bắc Kạn</a></li>
-                        <li><a href="#">Bạc Liêu</a></li>
-                        <li><a href="#">Bắc Ninh</a></li>
-                        <li><a href="#">Bến Tre</a></li>
-                        <li><a href="#">Bình Định</a></li>
-                        <li><a href="#">Bình Dương</a></li>
-                        <li><a href="#">Bình Phước</a></li>
-                    </ul><!-- column4 -->
-                </div>
-        	</div><!-- searchby-provinces -->
-        </div><!-- container -->
-    </section><!-- searchby-provinces -->
+     <?php if(isset($menu) && ($menu == "index" || $menu == "tinhthanh")): ?>
+      <?php echo $__env->make('layouts/uber/tinhthanh', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <?php endif; ?>
     <footer id="footer">
     	<div class="container clearfix">
@@ -214,9 +75,9 @@
                 Giấy phép MXH số 05-GXN-TTDT.</p>
             </div><!-- site-info -->
             <div class="social-links">
-            	<a href="#" class="fb"><img src="images/social-fb.png"></a>
-                <a href="#" class="gp"><img src="images/social-gp.png"></a>
-                <a href="#" class="tw"><img src="images/social-tw.png"></a>
+            	<a href="<?php if(CNF_fb != ''): ?> <?php echo CNF_fb; ?> <?php else: ?> # <?php endif; ?>" class="fb"><img src="<?php echo asset('sximo/themes/uber/image/social-fb.png'); ?>"></a>
+                <a href="<?php if(CNF_gg != ''): ?> <?php echo CNF_gg; ?> <?php else: ?> # <?php endif; ?>" class="gp"><img src="<?php echo asset('sximo/themes/uber/image/social-gp.png'); ?>"></a>
+                <a href="<?php if(CNF_tw != ''): ?> <?php echo CNF_tw; ?> <?php else: ?> # <?php endif; ?>" class="tw"><img src="<?php echo asset('sximo/themes/uber/image/social-tw.png'); ?>"></a>
             </div>
         </div><!-- container -->
     </footer>

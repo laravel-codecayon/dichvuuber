@@ -11,7 +11,7 @@
                     <li>{{ $error }}</li>
                   @endforeach
                 </ul>
-                <form  method="post" action="{{URL::to('home/dangky')}}">
+                <form  method="post" action="{{URL::to('home/dangky')}}" enctype="multipart/form-data">
                 	<div class="group-name">Thông tin tài khoản</div>
                     <div class="input-group">
                       <span class="input-group-addon">Tài khoản</span>
@@ -63,6 +63,10 @@
                       <span class="input-group-addon">Phường/Xã</span>
                       <select name="wardid" id="ward" class="form-control">
                       </select>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon">Ảnh đại diện</span>
+                      <input type="file" class="form-control" name="file" >
                     </div>
                     <div class="input-group">
                       <span class="input-group-addon">Mã bảo mật</span>

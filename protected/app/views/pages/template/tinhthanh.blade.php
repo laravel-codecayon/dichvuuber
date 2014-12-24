@@ -2,7 +2,7 @@
 <div class="container">
             <div id="wrap-content">
                 <div class="box thread-box guest">
-                    <div class="box-heading"><span></span></div>
+                    <div class="box-heading"><span>{{$province->name}}</span></div>
                     <ul>
                     @foreach($data as $item)
                         {{ SiteHelpers::templatePost($item) }}

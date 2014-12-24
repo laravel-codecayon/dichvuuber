@@ -34,6 +34,7 @@ class Customer extends BaseModel  {
 			"provinceid" => "required",
 			"districtid" => "required",
 			"wardid" => "required",
+			'file'	=>'mimes:gif,png,jpg,jpeg|max:20000',
 		);
 	
 	public function columnTable(){

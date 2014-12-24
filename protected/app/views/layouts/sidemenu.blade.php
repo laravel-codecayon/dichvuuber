@@ -72,23 +72,14 @@
 				@endif
 			</li>
 		@endforeach-->
-		<li @if(Request::is('nproducts')) class="active" @endif>
-			<a href="{{ URL::to('nproducts')}}"><i class="icon-drawer3"></i> <span class="nav-label">{{ Lang::get('core.product') }}</span><span class="fa arrow"></span></a>
+		<li @if(Request::is('customer')) class="active" @endif>
+			<a href="{{ URL::to('customer')}}"><i class="icon-drawer3"></i> <span class="nav-label">Khách hàng</span><span class="fa arrow"></span></a>
 		</li>
-		<li @if(Request::is('ncategories')) class="active" @endif>
-			<a href="{{ URL::to('ncategories')}}"><i class="icon-drawer2"></i> <span class="nav-label">{{ Lang::get('core.category') }}</span><span class="fa arrow"></span></a>
-		</li>
-		<li @if(Request::is('Promotion')) class="active" @endif>
-			<a href="{{ URL::to('Promotion')}}"><i class="icon-drawer2"></i> <span class="nav-label">{{ Lang::get('core.promotion') }}</span><span class="fa arrow"></span></a>
-		</li>
-		<li @if(Request::is('Slideshow')) class="active" @endif>
-			<a href="{{ URL::to('Slideshow')}}"><i class="icon-drawer2"></i> <span class="nav-label">{{ Lang::get('core.slideshow') }}</span><span class="fa arrow"></span></a>
+		<li @if(Request::is('post')) class="active" @endif>
+			<a href="{{ URL::to('post')}}"><i class="icon-drawer2"></i> <span class="nav-label">Bài đăng</span><span class="fa arrow"></span></a>
 		</li>
 		<li @if(Request::is('pages')) class="active" @endif>
 			<a href="{{ URL::to('pages')}}"><i class="icon-drawer2"></i> <span class="nav-label">{{ Lang::get('core.pages') }}</span><span class="fa arrow"></span></a>
-		</li>
-		<li @if(Request::is('order')) class="active" @endif>
-			<a href="{{ URL::to('order')}}"><i class="icon-drawer2"></i> <span class="nav-label">{{ Lang::get('core.order') }}</span><span class="fa arrow"></span></a>
 		</li>
 		@if(Session::get('gid') ==1 || Session::get('gid') ==2)
 			<li @if(Request::is('permission')) class="active" @endif>
@@ -102,6 +93,9 @@
 			</li>
 			<li @if(Request::is('menu')) class="active" @endif>
 				<a href="{{ URL::to('menu')}}"><i class="fa fa-users"></i> <span class="nav-label">{{ Lang::get('core.menu') }}</span><span class="fa arrow"></span></a>
+			</li>
+			<li @if(Request::is('config')) class="active" @endif>
+				<a href="{{ URL::to('config')}}"><i class="fa fa-users"></i> <span class="nav-label">{{ Lang::get('core.config') }}</span><span class="fa arrow"></span></a>
 			</li>
 		@endif
       </ul>

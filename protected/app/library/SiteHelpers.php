@@ -103,7 +103,7 @@ class SiteHelpers
 	}
 
 	public static function listposthome($type = 0){
-		$post = DB::table('post')->where('status','=','1')->where('active','=','1')->where('post_typecustomer','=',$type)->limit(10)->get();
+		$post = DB::table('post')->where('status','=','1')->where('active','=','1')->where('post_typecustomer','=',$type)->orderBy('post_id','desc')->limit(10)->get();
 		return $post;
 	}
 
@@ -147,7 +147,7 @@ class SiteHelpers
 		return $sex == 1 ? "Nam" : "Nu";
 	}
 
-	public static function templatePost($data = "")
+	public static function templatePost($data = "",$type = 0)
 	{
 		$image = $data->post_typecustomer == '1' ?  asset('sximo/themes/uber/image/guest-icon.png') : asset('sximo/themes/uber/image/driver-icon.png');
 		$link = URL::to('')."/tin/".$data->post_slug."-".$data->post_id.".html";
@@ -159,7 +159,9 @@ class SiteHelpers
 	    $output .=  '<div class="trip">';
 	    $output .=  '<span class="start-place">Nơi đi : <b>'.self::getNameaddress($data->post_districtfrom,'district','districtid').', '.self::getNameaddress($data->post_provincefrom,'province','provinceid').'</b></span>';
 	    $output .=  '<span class="end-place">Nơi đến : <b>'.self::getNameaddress($data->post_districtto,'district','districtid').', '.self::getNameaddress($data->post_provinceto,'province','provinceid').'</b></span>';
-	    $output .=  '<span class="start-date">Ngày xuất phát : <b>'.date('d-m-Y',$data->post_datestar).'</b></span>';
+	    if($type == 0){
+	    	$output .=  '<span class="start-date">Ngày xuất phát : <b>'.date('d-m-Y',$data->post_datestar).'</b></span>';
+	    }
 	    $output .=  '</div>';
 	    $output .=  '</a>';
         $output .=  '</li>';

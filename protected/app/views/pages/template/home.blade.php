@@ -7,18 +7,18 @@
                   <ul>
 
                   @foreach($guest as $item)
-                        {{ SiteHelpers::templatePost($item) }}
+                        {{ SiteHelpers::templatePost($item,1) }}
                     @endforeach
-                    <li class="more">Và còn hàng ngàn khách hàng khác ... <a href="#">Xem tất cả khách hàng</a></li>
+                    <li class="more">Và còn hàng ngàn hành khách khác ... <a href="{{URL::to('hanh-khach.html')}}">Xem tất cả hành khách</a></li>
                     </ul>
                 </div><!-- guest-list -->
                 <div class="thread-list driver">
                   <div class="box-heading"><span>Tài xế</span></div>
                   <ul>
                   @foreach($driver as $item)
-                        {{ SiteHelpers::templatePost($item) }}
+                        {{ SiteHelpers::templatePost($item,1) }}
                     @endforeach
-                    <li class="more">Và còn hàng ngàn hành khách khác ... <a href="#">Xem tất cả hành khách</a></li>
+                    <li class="more">Và còn hàng ngàn tài xế khác ... <a href="{{URL::to('tai-xe.html')}}">Xem tất cả tài xế</a></li>
                     </ul>
                 </div><!-- driver-list -->
             </div><!-- home-list -->

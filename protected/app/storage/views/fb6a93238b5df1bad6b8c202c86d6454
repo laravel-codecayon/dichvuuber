@@ -72,23 +72,14 @@
 				<?php endif; ?>
 			</li>
 		<?php endforeach; ?>-->
-		<li <?php if(Request::is('nproducts')): ?> class="active" <?php endif; ?>>
-			<a href="<?php echo URL::to('nproducts'); ?>"><i class="icon-drawer3"></i> <span class="nav-label"><?php echo Lang::get('core.product'); ?></span><span class="fa arrow"></span></a>
+		<li <?php if(Request::is('customer')): ?> class="active" <?php endif; ?>>
+			<a href="<?php echo URL::to('customer'); ?>"><i class="icon-drawer3"></i> <span class="nav-label">Khách hàng</span><span class="fa arrow"></span></a>
 		</li>
-		<li <?php if(Request::is('ncategories')): ?> class="active" <?php endif; ?>>
-			<a href="<?php echo URL::to('ncategories'); ?>"><i class="icon-drawer2"></i> <span class="nav-label"><?php echo Lang::get('core.category'); ?></span><span class="fa arrow"></span></a>
-		</li>
-		<li <?php if(Request::is('Promotion')): ?> class="active" <?php endif; ?>>
-			<a href="<?php echo URL::to('Promotion'); ?>"><i class="icon-drawer2"></i> <span class="nav-label"><?php echo Lang::get('core.promotion'); ?></span><span class="fa arrow"></span></a>
-		</li>
-		<li <?php if(Request::is('Slideshow')): ?> class="active" <?php endif; ?>>
-			<a href="<?php echo URL::to('Slideshow'); ?>"><i class="icon-drawer2"></i> <span class="nav-label"><?php echo Lang::get('core.slideshow'); ?></span><span class="fa arrow"></span></a>
+		<li <?php if(Request::is('post')): ?> class="active" <?php endif; ?>>
+			<a href="<?php echo URL::to('post'); ?>"><i class="icon-drawer2"></i> <span class="nav-label">Bài đăng</span><span class="fa arrow"></span></a>
 		</li>
 		<li <?php if(Request::is('pages')): ?> class="active" <?php endif; ?>>
 			<a href="<?php echo URL::to('pages'); ?>"><i class="icon-drawer2"></i> <span class="nav-label"><?php echo Lang::get('core.pages'); ?></span><span class="fa arrow"></span></a>
-		</li>
-		<li <?php if(Request::is('order')): ?> class="active" <?php endif; ?>>
-			<a href="<?php echo URL::to('order'); ?>"><i class="icon-drawer2"></i> <span class="nav-label"><?php echo Lang::get('core.order'); ?></span><span class="fa arrow"></span></a>
 		</li>
 		<?php if(Session::get('gid') ==1 || Session::get('gid') ==2): ?>
 			<li <?php if(Request::is('permission')): ?> class="active" <?php endif; ?>>
@@ -102,6 +93,9 @@
 			</li>
 			<li <?php if(Request::is('menu')): ?> class="active" <?php endif; ?>>
 				<a href="<?php echo URL::to('menu'); ?>"><i class="fa fa-users"></i> <span class="nav-label"><?php echo Lang::get('core.menu'); ?></span><span class="fa arrow"></span></a>
+			</li>
+			<li <?php if(Request::is('config')): ?> class="active" <?php endif; ?>>
+				<a href="<?php echo URL::to('config'); ?>"><i class="fa fa-users"></i> <span class="nav-label"><?php echo Lang::get('core.config'); ?></span><span class="fa arrow"></span></a>
 			</li>
 		<?php endif; ?>
       </ul>

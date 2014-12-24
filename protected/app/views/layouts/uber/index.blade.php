@@ -38,10 +38,10 @@
     <nav id="nav">
     	<div class="container">
         	<ul class="menu">
-            	<li class="home"><a href="{{URL::to('')}}"><img src="{{ asset('sximo/themes/uber/image/home-icon.png')}}"></a></li>
-                <li><a href="{{URL::to('')}}/tin-moi-dang.html">Tin mới đăng</a></li>
-                <li><a href="{{URL::to('')}}/hanh-khach.html">Hành khách</a></li>
-                <li><a href="{{URL::to('')}}/tai-xe.html">Tài xế</a></li>
+            	<li @if(isset($menu) && $menu == "index") class="post-thread" @endif><a href="{{URL::to('')}}"><img src="{{ asset('sximo/themes/uber/image/home-icon.png')}}"></a></li>
+                <li @if(isset($menu) && $menu == "tinmoi") class="post-thread" @endif><a href="{{URL::to('')}}/tin-moi-dang.html">Tin mới đăng</a></li>
+                <li @if(isset($menu) && $menu == "hanhkhach") class="post-thread" @endif><a href="{{URL::to('')}}/hanh-khach.html">Hành khách</a></li>
+                <li @if(isset($menu) && $menu == "taixe") class="post-thread" @endif><a href="{{URL::to('')}}/tai-xe.html">Tài xế</a></li>
             </ul>
             <ul class="member-area">
             	<li @if(isset($menu) && $menu == "dangky") class="post-thread" @endif ><a href="{{URL::to('dang-ky.html')}}">Đăng ký</a></li>
