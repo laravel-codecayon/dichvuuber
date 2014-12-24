@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+    <title><?php echo isset($page['pageTitle']) ? $page['pageTitle'].' | '.$page['pageNote']. " | ". CNF_APPNAME : CNF_APPNAME ;?></title>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="{{ CNF_METAKEY }}">
+    <meta name="description" content="{{ CNF_METADESC }}">
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
