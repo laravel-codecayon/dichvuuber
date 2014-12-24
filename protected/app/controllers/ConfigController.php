@@ -36,6 +36,9 @@ class ConfigController extends BaseController  {
 		$validator = Validator::make(Input::all(), $rules);	
 		if ($validator->passes()) {
 			$val  =		"<?php \n"; 
+			$val .= 	"define('CNF_fb','".Input::get('cnf_fb')."');\n";
+			$val .= 	"define('CNF_gg','".Input::get('cnf_gg')."');\n";
+			$val .= 	"define('CNF_tw','".Input::get('cnf_tw')."');\n";
 			$val .= 	"define('CNF_APPNAME','".Input::get('cnf_appname')."');\n";
 			$val .= 	"define('CNF_APPDESC','".Input::get('cnf_appdesc')."');\n";
 			$val .= 	"define('CNF_COMNAME','".Input::get('cnf_comname')."');\n";

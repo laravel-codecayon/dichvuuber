@@ -75,7 +75,25 @@
 	<div class="col-md-8">
 	<input name="cnf_phone" type="text" id="cnf_phone" class="form-control input-sm" value="{{ CNF_PHONE }}" /> 
 	 </div> 
-  </div>   
+  </div>
+  <div class="form-group">
+    <label for="ipt" class=" control-label col-md-4">Facebook </label>
+	<div class="col-md-8">
+	<input name="cnf_fb" type="text" id="cnf_phone" class="form-control input-sm" value="{{ CNF_fb }}" /> 
+	 </div> 
+  </div>
+  <div class="form-group">
+    <label for="ipt" class=" control-label col-md-4">Google </label>
+	<div class="col-md-8">
+	<input name="cnf_gg" type="text" id="cnf_phone" class="form-control input-sm" value="{{ CNF_gg }}" /> 
+	 </div> 
+  </div>
+  <div class="form-group">
+    <label for="ipt" class=" control-label col-md-4">Twiter </label>
+	<div class="col-md-8">
+	<input name="cnf_tw" type="text" id="cnf_phone" class="form-control input-sm" value="{{ CNF_tw }}" /> 
+	 </div> 
+  </div>
   <!--<div class="form-group">
     <label for="ipt" class=" control-label col-md-4"> Muliti language <br /> <small> Only Layout Interface </small> </label>
 	<div class="col-md-8">

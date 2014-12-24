@@ -102,6 +102,30 @@ class SiteHelpers
 		return $data;
 	}
 
+	public static function listposthome($type = 0){
+		$post = DB::table('post')->where('status','=','1')->where('active','=','1')->where('post_typecustomer','=',$type)->limit(10)->get();
+		return $post;
+	}
+
+	public static function listTinhthanh(){
+		$output = '';
+		$j=0;
+		$k=1;
+		$province = DB::table('province')->get();
+		for($i = 0;$i < 63;$i ++){
+			$link = URL::to('')."/tinh-thanh.html?province=".$province[$i]->provinceid;
+			$output .= $j == 0 ? '<ul class="column column'.$k.'">' : '';
+			$output .= '<li><a href="'.$link.'">'.$province[$i]->name.'</a></li>';
+			$j++;
+			if($j == 16){
+				$k ++ ;
+				$j = 0;
+				$output .= '</ul>';
+			}
+		}
+		return $output;
+	}
+
 	public static function getNameaddress($id = '',$table = '',$key=''){
 		$data = DB::table($table)->where($key,"=",$id)->first();
 		$name = count($data) > 0 ? $data->name : '';

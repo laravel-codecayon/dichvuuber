@@ -398,10 +398,29 @@ class HomeController extends BaseController {
 	}
 
 	public function tinmoi (){
-		
 		$sort = 'post_id';
 		$order = 'desc';
 		$filter = " AND status = 1 AND active = 1 ";
+		$province_from = (Input::get('province_from') != '') ? Input::get('province_from') : '79';
+		$district_from = ( Input::get('district_from') != '') ? Input::get('district_from') : '';
+		$province_to = ( Input::get('province_to') != '') ? Input::get('province_to') : '79';
+		$district_to = ( Input::get('district_to') != '') ? Input::get('district_to') : '';
+		$datestar = ( Input::get('datestar') != '') ? strtotime(Input::get('datestar')) : '';
+
+		$filter .= ( Input::get('province_from') != '') ? " AND post_provincefrom = ".Input::get('province_from') : '';
+		$filter .= ( Input::get('district_from') != '') ? " AND post_districtfrom = ".Input::get('district_from') : '';
+		$filter .= ( Input::get('province_to') != '') ? " AND post_provinceto = ".Input::get('province_to') : '';
+		$filter .= ( Input::get('district_to') != '') ? " AND post_districtto = ".Input::get('district_to') : '';
+		$filter .= ( Input::get('datestar') != '') ? " AND post_datestar >= ".strtotime(Input::get('datestar')) : '';
+
+		$data_order = array(
+						'province_from' => $province_from,
+						'district_from' => $district_from,
+						'province_to' => $province_to,
+						'district_to' => $district_to,
+						'datestar' => $datestar,
+					);
+
 		$page = (!is_null(Input::get('page')) && Input::get('page') != '') ? Input::get('page') : "1";
 		$params = array(
 			'page'		=> $page ,
@@ -416,6 +435,7 @@ class HomeController extends BaseController {
 		// Build pagination setting
 		$page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;	
 		$pagination = Paginator::make($results['rows'], $results['total'],$params['limit']);
+		$data['order'] 		= $data_order;
 		$data['data']		= $results['rows'];
 		$data['page']		= $page;
 		$data['numpage']	= $params['limit'];
@@ -430,6 +450,161 @@ class HomeController extends BaseController {
 		$page = 'pages.template.tinmoi';
 		$page = SiteHelpers::renderHtml($page);
 		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','tinmoi');
+	}
+
+	public function hanhkhach (){
+		$sort = 'post_id';
+		$order = 'desc';
+		$filter = " AND status = 1 AND active = 1 AND post_typecustomer = 1";
+		$province_from = (Input::get('province_from') != '') ? Input::get('province_from') : '79';
+		$district_from = ( Input::get('district_from') != '') ? Input::get('district_from') : '';
+		$province_to = ( Input::get('province_to') != '') ? Input::get('province_to') : '79';
+		$district_to = ( Input::get('district_to') != '') ? Input::get('district_to') : '';
+		$datestar = ( Input::get('datestar') != '') ? strtotime(Input::get('datestar')) : '';
+
+		$filter .= ( Input::get('province_from') != '') ? " AND post_provincefrom = ".Input::get('province_from') : '';
+		$filter .= ( Input::get('district_from') != '') ? " AND post_districtfrom = ".Input::get('district_from') : '';
+		$filter .= ( Input::get('province_to') != '') ? " AND post_provinceto = ".Input::get('province_to') : '';
+		$filter .= ( Input::get('district_to') != '') ? " AND post_districtto = ".Input::get('district_to') : '';
+		$filter .= ( Input::get('datestar') != '') ? " AND post_datestar >= ".strtotime(Input::get('datestar')) : '';
+
+		$data_order = array(
+						'province_from' => $province_from,
+						'district_from' => $district_from,
+						'province_to' => $province_to,
+						'district_to' => $district_to,
+						'datestar' => $datestar,
+					);
+
+		$page = (!is_null(Input::get('page')) && Input::get('page') != '') ? Input::get('page') : "1";
+		$params = array(
+			'page'		=> $page ,
+			'limit'		=> ( $this->perpage ) ,
+			'sort'		=> $sort ,
+			'order'		=> $order,
+			'params'	=> $filter,
+			//'global'	=> (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
+		);
+		$model = new Post();
+		$results = $model->getRows( $params );
+		// Build pagination setting
+		$page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;	
+		$pagination = Paginator::make($results['rows'], $results['total'],$params['limit']);
+		$data['order'] 		= $data_order;
+		$data['data']		= $results['rows'];
+		$data['page']		= $page;
+		$data['numpage']	= $params['limit'];
+		// Build Pagination 
+		$data['pagination']	= $pagination;
+		// Build pager number and append current param GET
+		$data['pager'] 		= $this->injectPaginate();
+
+
+		$this->data['pageTitle'] = "Hành khách";
+		$this->data['pageNote'] = CNF_APPNAME;
+		$page = 'pages.template.hanhkhach';
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','hanhkhach');
+	}
+
+	public function taixe (){
+		$sort = 'post_id';
+		$order = 'desc';
+		$filter = " AND status = 1 AND active = 1 AND post_typecustomer = 0";
+		$province_from = (Input::get('province_from') != '') ? Input::get('province_from') : '79';
+		$district_from = ( Input::get('district_from') != '') ? Input::get('district_from') : '';
+		$province_to = ( Input::get('province_to') != '') ? Input::get('province_to') : '79';
+		$district_to = ( Input::get('district_to') != '') ? Input::get('district_to') : '';
+		$datestar = ( Input::get('datestar') != '') ? strtotime(Input::get('datestar')) : '';
+
+		$filter .= ( Input::get('province_from') != '') ? " AND post_provincefrom = ".Input::get('province_from') : '';
+		$filter .= ( Input::get('district_from') != '') ? " AND post_districtfrom = ".Input::get('district_from') : '';
+		$filter .= ( Input::get('province_to') != '') ? " AND post_provinceto = ".Input::get('province_to') : '';
+		$filter .= ( Input::get('district_to') != '') ? " AND post_districtto = ".Input::get('district_to') : '';
+		$filter .= ( Input::get('datestar') != '') ? " AND post_datestar >= ".strtotime(Input::get('datestar')) : '';
+
+		$data_order = array(
+						'province_from' => $province_from,
+						'district_from' => $district_from,
+						'province_to' => $province_to,
+						'district_to' => $district_to,
+						'datestar' => $datestar,
+					);
+
+		$page = (!is_null(Input::get('page')) && Input::get('page') != '') ? Input::get('page') : "1";
+		$params = array(
+			'page'		=> $page ,
+			'limit'		=> ( $this->perpage ) ,
+			'sort'		=> $sort ,
+			'order'		=> $order,
+			'params'	=> $filter,
+			//'global'	=> (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
+		);
+		$model = new Post();
+		$results = $model->getRows( $params );
+		// Build pagination setting
+		$page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;	
+		$pagination = Paginator::make($results['rows'], $results['total'],$params['limit']);
+		$data['order'] 		= $data_order;
+		$data['data']		= $results['rows'];
+		$data['page']		= $page;
+		$data['numpage']	= $params['limit'];
+		// Build Pagination 
+		$data['pagination']	= $pagination;
+		// Build pager number and append current param GET
+		$data['pager'] 		= $this->injectPaginate();
+
+
+		$this->data['pageTitle'] = "Danh sách tài xế";
+		$this->data['pageNote'] = CNF_APPNAME;
+		$page = 'pages.template.taixe';
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','taixe');
+	}
+
+	public function tinhthanh (){
+		if(Input::get('province') == ''){
+			return Redirect::to('');
+		}
+		$sort = 'post_id';
+		$order = 'desc';
+		$province = Input::get('province');
+		$data_province = DB::table('province')->where('provinceid','=',$province)->first();
+		$filter = " AND status = 1 AND active = 1 AND (post_provincefrom = $province OR post_provinceto = $province) ";
+		$data_order = array(
+						'province' => $province,
+					);
+
+		$page = (!is_null(Input::get('page')) && Input::get('page') != '') ? Input::get('page') : "1";
+		$params = array(
+			'page'		=> $page ,
+			'limit'		=> ( $this->perpage ) ,
+			'sort'		=> $sort ,
+			'order'		=> $order,
+			'params'	=> $filter,
+			//'global'	=> (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
+		);
+		$model = new Post();
+		$results = $model->getRows( $params );
+		// Build pagination setting
+		$page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;	
+		$pagination = Paginator::make($results['rows'], $results['total'],$params['limit']);
+		$data['order'] 		= $data_order;
+		$data['province']	= $data_province->name;
+		$data['data']		= $results['rows'];
+		$data['page']		= $page;
+		$data['numpage']	= $params['limit'];
+		// Build Pagination 
+		$data['pagination']	= $pagination;
+		// Build pager number and append current param GET
+		$data['pager'] 		= $this->injectPaginate();
+
+
+		$this->data['pageTitle'] = "Danh sách tin ".$data_province->name;
+		$this->data['pageNote'] = CNF_APPNAME;
+		$page = 'pages.template.tinhthanh';
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page,$data)->with('page', $this->data)->with('menu','tinhthanh');
 	}
 
 	/*public function cart()

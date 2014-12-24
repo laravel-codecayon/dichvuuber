@@ -4,7 +4,7 @@
 <div class="container">
             <div id="wrap-content">
                 <div class="box thread-box guest">
-                    <div class="box-heading"><span>Tin mới</span></div>
+                    <div class="box-heading"><span>Tài xế</span></div>
                     <ul>
                     @foreach($data as $item)
                         {{ SiteHelpers::templatePost($item) }}
@@ -19,7 +19,7 @@
                 <div class="box filter">
                     <div class="box-heading">Bộ lọc tin</div>
                     <div class="box-content">
-                        <form id="formsort" method="get" action="{{URL::to('')}}/tin-moi-dang.html">
+                        <form id="formsort" method="get" action="{{URL::to('')}}/tai-xe.html">
                         <div class="input-group place">
                             <label>Nơi xuất phát</label>
                             <select name="province_from" id="province_from" class="form-control">
