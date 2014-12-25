@@ -2,6 +2,9 @@
 define('CNF_fb','http://facebook.com');
 define('CNF_gg','http://google.com.vn');
 define('CNF_tw','');
+define('CNF_FREE','0');
+define('CNF_PRICEPOST','10000');
+define('CNF_FOOTER','Nội dung footer');
 define('CNF_APPNAME','My Company Apps');
 define('CNF_APPDESC','Internal PHP Application');
 define('CNF_COMNAME','My Company Name');

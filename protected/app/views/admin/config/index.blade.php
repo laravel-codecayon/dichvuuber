@@ -1,4 +1,5 @@
-
+{{ HTML::script('sximo/js/plugins/tinymce/jscripts/tiny_mce/jquery.tinymce.js')}}
+{{ HTML::script('sximo/js/plugins/tinymce/jscripts/tiny_mce/tiny_mce.js')}}
   <div class="page-content row">
     <!-- Page header -->
     <div class="page-header">
@@ -94,6 +95,21 @@
 	<input name="cnf_tw" type="text" id="cnf_phone" class="form-control input-sm" value="{{ CNF_tw }}" /> 
 	 </div> 
   </div>
+  <div class="form-group">
+    <label for="ipt" class=" control-label col-md-4"> Formality Site <br /> </label>
+	<div class="col-md-8">
+		<select class="form-control" name="cnf_free">
+			<option @if(CNF_FREE == 0) selected @endif value="0">Free</option>
+			<option @if(CNF_FREE == 1) selected @endif value="1">charge</option>
+		</select>
+	 </div> 
+  </div>
+  <div class="form-group">
+    <label for="ipt" class=" control-label col-md-4">Price for a post </label>
+	<div class="col-md-8">
+	<input name="cnf_pricepost" type="text" id="cnf_pricepost" class="form-control input-sm" value="{{ CNF_PRICEPOST }}" /> 
+	 </div> 
+  </div>
   <!--<div class="form-group">
     <label for="ipt" class=" control-label col-md-4"> Muliti language <br /> <small> Only Layout Interface </small> </label>
 	<div class="col-md-8">
@@ -154,6 +170,12 @@
 		<textarea class="form-control input-sm"  name="cnf_metadesc">{{ CNF_METADESC }}</textarea>
 	 </div> 
   </div>  
+  <div class="form-group">
+    <label  class=" control-label col-md-4">Content footer</label>
+	<div class="col-md-8">
+		<textarea class="form-control input-sm mceEditor" row='10' clos="10"  name="cnf_footer">{{ CNF_FOOTER }}</textarea>
+	 </div> 
+  </div>
 
 </div>  
  {{ Form::close() }}
@@ -163,7 +185,21 @@
 </div>
 </div>
 
+<script type="text/javascript">
+	$(document).ready(function() { 
 
+		$(function(){
+		tinymce.init({	
+			mode : "specific_textareas",
+			editor_selector : "mceEditor",
+			 plugins : "openmanager",
+			 file_browser_callback: "openmanager",
+			 open_manager_upload_path: '../../../../../../../../uploads/images/',
+		 });
+	});
+
+	});
+</script>
 
 
 

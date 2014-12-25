@@ -159,6 +159,12 @@ class CustomerController extends BaseController {
 	{
 		$trackUri = $this->data['trackUri'];
 		$data['status'] = Input::get('status');
+		$money_more = Input::get('money_more');
+		$money_loss = Input::get('money_loss');
+		$cus = $this->model->find($id);
+		$money = $cus['money'] + $money_more;
+		$money = $money < $money_loss ? 0 : $money - $money_loss;
+		$data['money'] = $money;
 		$ID = $this->model->insertRow($data , Input::get('customer_id'));
 		// Input logs
 		if( Input::get('customer_id') =='')

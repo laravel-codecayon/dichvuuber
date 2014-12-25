@@ -32,9 +32,6 @@
             
          </div><!-- container -->
 	</header>
-  @if(Session::has('message'))
-       {{ Session::get('message') }}
-  @endif
     <nav id="nav">
     	<div class="container">
         	<ul class="menu">
@@ -70,9 +67,7 @@
     	<div class="container clearfix">
         	<div class="site-info">
             	<h2>DichvuUBER.com</h2>
-                <p>Copyright © Du lịch Huế<br>
-                Đơn vị chủ quản: Du lịch Huế<br>
-                Giấy phép MXH số 05-GXN-TTDT.</p>
+                <p>{{CNF_FOOTER}}<br>
             </div><!-- site-info -->
             <div class="social-links">
             	<a href="@if(CNF_fb != '') {{CNF_fb}} @else # @endif" class="fb"><img src="{{ asset('sximo/themes/uber/image/social-fb.png')}}"></a>

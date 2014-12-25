@@ -30,7 +30,7 @@ class Customer extends BaseModel  {
 			"email" => "required|email|unique:customer",
 			"password" => "required|alpha_num|between:5,20",
 			"repassword" => "required|alpha_num|same:password",
-			"address" => "required",
+			//"address" => "required",
 			"provinceid" => "required",
 			"districtid" => "required",
 			"wardid" => "required",

@@ -14,53 +14,53 @@
                 <form  method="post" action="{{URL::to('home/dangky')}}" enctype="multipart/form-data">
                 	<div class="group-name">Thông tin tài khoản</div>
                     <div class="input-group">
-                      <span class="input-group-addon">Tài khoản</span>
+                      <span class="input-group-addon">Tài khoản <font color="red">*</font></span>
                       <input  type="text" class="form-control" name="username" value="{{$input['username']}}" >
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Mật khẩu</span>
+                      <span class="input-group-addon">Mật khẩu <font color="red">*</font></span>
                       <input type="password" class="form-control" name="password">
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Nhập lại mật khẩu</span>
+                      <span class="input-group-addon">Nhập lại mật khẩu <font color="red">*</font></span>
                       <input type="password" class="form-control" name="repassword">
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Email</span>
+                      <span class="input-group-addon">Email <font color="red">*</font></span>
                       <input type="text" class="form-control" name="email" value="{{$input['email']}}">
                     </div>
                     <div class="group-name">Thông tin cá nhân</div>
                     <div class="input-group">
-                      <span class="input-group-addon">Tên của bạn</span>
+                      <span class="input-group-addon">Tên của bạn <font color="red">*</font></span>
                       <input type="text" class="form-control" name="name" value="{{$input['name']}}">
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Giới tính</span>
+                      <span class="input-group-addon">Giới tính <font color="red">*</font></span>
                       <select name="sex" class="form-control">
                         <option value="1" @if($input['sex'] == 1) selected @endif>Nam</option>
                         <option value="0" @if($input['sex'] == 0) selected @endif>Nữ</option>
                       </select>
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Số điện thoại</span>
+                      <span class="input-group-addon">Số điện thoại <font color="red">*</font></span>
                       <input type="text" class="form-control" name="phone" value="{{$input['phone']}}">
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Địa chỉ</span>
+                      <span class="input-group-addon">Địa chỉ </span>
                       <input type="text" class="form-control" name="address" value="{{$input['address']}}">
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Tỉnh/Thành</span>
+                      <span class="input-group-addon">Tỉnh/Thành <font color="red">*</font></span>
                       <select name="provinceid" id="city" class="form-control">
                       </select>
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Quận/Huyện</span>
+                      <span class="input-group-addon">Quận/Huyện <font color="red">*</font></span>
                       <select name="districtid" id="district" class="form-control">
                       </select>
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Phường/Xã</span>
+                      <span class="input-group-addon">Phường/Xã <font color="red">*</font></span>
                       <select name="wardid" id="ward" class="form-control">
                       </select>
                     </div>
@@ -69,7 +69,7 @@
                       <input type="file" class="form-control" name="file" >
                     </div>
                     <div class="input-group">
-                      <span class="input-group-addon">Mã bảo mật</span>
+                      <span class="input-group-addon">Mã bảo mật <font color="red">*</font></span>
                       @if(CNF_RECAPTCHA =='true') 
 
                         {{ Form::captcha(array('theme' => 'white')); }}

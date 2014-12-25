@@ -14,7 +14,7 @@ class HomeController extends BaseController {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
-	protected  $perpage = 2;
+	protected  $perpage = 15;
 
 	public function __construct() {
 
@@ -25,6 +25,9 @@ class HomeController extends BaseController {
 	}
 
 	public function dangky(){
+		if(Session::has('customer')){
+			return Redirect::to('change-info.html');
+		}
 		$this->data['pageTitle'] = "Đăng ký";
 		$this->data['pageNote'] = CNF_APPNAME;
 
@@ -82,13 +85,13 @@ class HomeController extends BaseController {
 			}
 
 			$ID = $mdCus->insertRow($data , Input::get('customer_id'));
-			$data_message = array('name'=>Input::get('name'),'code'=>$data['code'],'email'=>Input::get('email'),'password'=>$data['password']); 
+			$data_message = array('name'=>Input::get('name'),'code'=>$data['code'],'email'=>Input::get('email'),'password'=>Input::get('password')); 
 			Mail::send('emails.dangky', $data_message, function($message)
 			{
-				$message->from( Input::get('email'), Input::get('name') );
-			    $message->to(CNF_EMAIL, 'Admin')->subject(Input::get('subject'));
+				$message->from( CNF_EMAIL, 'Admin' );
+			    $message->to(Input::get('email'), Input::get('name'))->subject('Kích hoạt tài khoản');
 			});
-			return Redirect::to('')->with('message', SiteHelpers::alert('success','Đăng ký thành công ! Email kích hoạt dã được gửi vào Email của bạn Vui lòng kích hoạt để sử dụng dịch vụ chủa chúng tôi'));
+			return Redirect::to('thong-bao.html')->with('message', SiteHelpers::alert('success','Đăng ký thành công ! Email kích hoạt dã được gửi vào Email của bạn Vui lòng kích hoạt để sử dụng dịch vụ chủa chúng tôi'));
 		}
 		else{
 			return Redirect::to('dang-ky.html')->with('message_dangky', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->with('input_rd',Input::all())->withErrors($validator)->withInput();
@@ -107,7 +110,7 @@ class HomeController extends BaseController {
 		$data['code'] = '';
 		$data['status'] = '1';
 		DB::table('customer')->where('customer_id','=',$customer->customer_id)->update($data);
-		return Redirect::to('')->with('message', SiteHelpers::alert('success','Kích hoạt thành công ! Hãy đăng nhập ngay để tham gia với chúng tôi !'));
+		return Redirect::to('thong-bao.html')->with('message', SiteHelpers::alert('success','Kích hoạt thành công ! Hãy đăng nhập ngay để tham gia với chúng tôi !'));
 	}
 
 	public function getDangnhap(){
@@ -131,7 +134,7 @@ class HomeController extends BaseController {
 		if(CNF_RECAPTCHA =='true') $rules['recaptcha_response_field'] = 'required|recaptcha';
 		$validator = Validator::make(Input::all(), $rules);
 		if ($validator->passes()) {
-			$cus = DB::table('customer')->where('username', '=',Input::get('username'))->where('password','=',md5(Input::get('password')))->first();
+			$cus = DB::table('customer')->where('username', '=',Input::get('username'))->where('status','=','1')->where('password','=',md5(Input::get('password')))->first();
 			if(count($cus)>0){
 				$arr_cus = array('id'=>$cus->customer_id, 'name'=>$cus->name, "email"=>$cus->email, 'image'=>$cus->image);
 				Session::put('customer',$arr_cus);
@@ -177,7 +180,7 @@ class HomeController extends BaseController {
 				    $message->to(Input::get('email'), '')->subject('Thông tin đăng nhập');
 				});
 			}
-			return Redirect::to('')->with('message', SiteHelpers::alert('success','Vui lòng kiểm tra Email để nận mật khẩu mới !'));
+			return Redirect::to('thong-bao.html')->with('message', SiteHelpers::alert('success','Vui lòng kiểm tra Email để nận mật khẩu mới !'));
 		}	
 		else{
 			return Redirect::to('forgotpass.html')->with('message_forgotpass', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->withErrors($validator)->withInput();
@@ -252,7 +255,7 @@ class HomeController extends BaseController {
 				}
 			}
 			DB::table('customer')->where('email','=',Input::get('email'))->where('username','=',Input::get('username'))->update($data);
-			return Redirect::to('change-info.html')->with('message', SiteHelpers::alert('success','Thay đổi thông tin thành công !'));
+			return Redirect::to('thong-bao.html')->with('message', SiteHelpers::alert('success','Thay đổi thông tin thành công !'));
 		}else{
 			return Redirect::to('change-info.html')->with('message_changeinfo', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->withErrors($validator)->withInput();
 		}
@@ -290,7 +293,7 @@ class HomeController extends BaseController {
 			}
 			$pass = md5(Input::get('newpassword'));
 			DB::table('customer')->where('customer_id','=',$ses_cus['id'])->update(array('password'=>$pass));
-			return Redirect::to('')->with('message', SiteHelpers::alert('success','Thay đổi mật khẩu thành công !'));
+			return Redirect::to('thong-bao.html')->with('message', SiteHelpers::alert('success','Thay đổi mật khẩu thành công !'));
 		}else{
 			return Redirect::to('change-pass.html')->with('message_changepass', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->withErrors($validator)->withInput();
 		}
@@ -384,7 +387,15 @@ class HomeController extends BaseController {
 		if ($validator->passes()) 
 		{
 			$ses_cus = Session::get('customer');
+			$customer = DB::table('customer')->where('customer_id','=',$ses_cus['id'])->first();
 			$data = $this->getDataPost('post');
+			if(CNF_FREE == 1){
+				if($customer->money < CNF_PRICEPOST){
+					return Redirect::to('contact-us.html')->with('message_contact', SiteHelpers::alert('warning','Tài khoản quý khách không đủ để đăng tin ! Vui lòng liên hệ Admin để nạp tài khoản !'));
+				}
+				$update_cus['money'] = $customer->money - CNF_PRICEPOST;
+				DB::table('customer')->where('customer_id','=',$ses_cus['id'])->update($update_cus);
+			}
 			$data['created'] = time();
 			$data['post_datestar'] = strtotime($data['post_datestar']);
 			$data['post_slug'] = SiteHelpers::seoUrl(trim($data['post_subject']));
@@ -412,7 +423,7 @@ class HomeController extends BaseController {
 			}
 			$mdPost = new Post();
 			$ID = $mdPost->insertRow($data , '');
-			return Redirect::to('')->with('message', SiteHelpers::alert('success','Thao tác thành công ! Bài đăng của bạn đang chờ duyệt !'));
+			return Redirect::to('thong-bao.html')->with('message', SiteHelpers::alert('success','Thao tác thành công ! Bài đăng của bạn đang chờ duyệt !'));
 		}else{
 			$input_rd = Input::all();
 			unset($input_rd['post_file1']);
@@ -420,6 +431,17 @@ class HomeController extends BaseController {
 			return Redirect::to('dang-tin.html')->with('message_dangtin', SiteHelpers::alert('error','Vui lòng xác nhận các thông tin bên dưới'))->with('input_rd',$input_rd)->withErrors($validator)->withInput();
 		}
 
+	}
+
+	public function thongbao(){
+		if(!Session::has('message')){
+			return Redirect::to('');
+		}
+		$this->data['pageTitle'] = "Thông báo";
+		$this->data['pageNote'] = CNF_APPNAME;
+		$page = 'pages.template.thongbao';
+		$page = SiteHelpers::renderHtml($page);
+		$this->layout->nest('content',$page)->with('page', $this->data)->with('menu','thongbao');
 	}
 
 	public function page($id){
@@ -1029,7 +1051,7 @@ class HomeController extends BaseController {
 				$message->from( Input::get('email'), Input::get('name') );
 			    $message->to(CNF_EMAIL, 'Admin')->subject(Input::get('subject'));
 			});
-			return Redirect::to(URL::to('')."/contact-us.html")->with('message', SiteHelpers::alert('success','Yêu cầu của bạn đã được gởi !'));	
+			return Redirect::to(URL::to('')."/thong-bao.html")->with('message', SiteHelpers::alert('success','Yêu cầu của bạn đã được gởi !'));	
 				
 		} else {
 			return Redirect::to(URL::to('')."/contact-us.html")->with('message_contact', SiteHelpers::alert('error','Vui lòng khắc phục các lỗi bên dưới'))->with('input_rd',Input::all())

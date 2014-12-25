@@ -25,6 +25,7 @@ Route::controller('user', 'UserController');
 //Route::get('search.html', 'HomeController@search');
 //Route::get('checkout.html', 'HomeController@checkout');
 Route::get('tin/{alias}-{id}.html', 'HomeController@detailpost')->where(array('alias' => '(.*)','id'=>'[0-9]+'));
+Route::get('thong-bao.html', 'HomeController@thongbao');
 Route::get('tin-moi-dang.html', 'HomeController@tinmoi');
 Route::get('hanh-khach.html', 'HomeController@hanhkhach');
 Route::get('tai-xe.html', 'HomeController@taixe');

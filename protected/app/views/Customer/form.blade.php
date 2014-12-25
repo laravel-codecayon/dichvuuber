@@ -58,7 +58,34 @@
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div> 					
+								  </div>
+								  <div class="form-group  " >
+									<label for="Phone" class=" control-label col-md-4 text-left"> Tổng tiền </label>
+									<div class="col-md-6">
+									  {{ Form::text('money', $row['money'],array('class'=>'form-control', 'placeholder'=>'', 'readonly'=>''  )) }} 
+									 </div> 
+									 <div class="col-md-2">
+									 	
+									 </div>
+								  </div>
+								  <div class="form-group  " >
+									<label for="Phone" class=" control-label col-md-4 text-left"> Cộng vào </label>
+									<div class="col-md-6">
+									  {{ Form::text('money_more', '0',array('class'=>'form-control', 'placeholder'=>''  )) }} 
+									 </div> 
+									 <div class="col-md-2">
+									 	
+									 </div>
+								  </div>
+								  <div class="form-group  " >
+									<label for="Phone" class=" control-label col-md-4 text-left"> Trừ bớt </label>
+									<div class="col-md-6">
+									  {{ Form::text('money_loss', '0',array('class'=>'form-control', 'placeholder'=>''  )) }} 
+									 </div> 
+									 <div class="col-md-2">
+									 	
+									 </div>
+								  </div>
 								  <!--<div class="form-group  " >
 									<label for="Password" class=" control-label col-md-4 text-left"> {{ Lang::get('core.password') }} </label>
 									<div class="col-md-6">
