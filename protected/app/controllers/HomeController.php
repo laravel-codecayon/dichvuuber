@@ -216,8 +216,8 @@ class HomeController extends BaseController {
 		}
 		$rules = $rules=array(
 			"email" => "required|email",
-			"username" => "required|alpha_num|between:5,15",
-			"name" => "required|between:5,15",
+			"username" => "required|alpha_num|between:5,20",
+			"name" => "required|between:5,50",
 			"phone" => "required|Numeric",
 			"address" => "required",
 			"provinceid" => "required",

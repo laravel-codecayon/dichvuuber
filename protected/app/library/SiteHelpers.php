@@ -117,7 +117,7 @@ class SiteHelpers
 			$output .= $j == 0 ? '<ul class="column column'.$k.'">' : '';
 			$output .= '<li><a href="'.$link.'">'.$province[$i]->name.'</a></li>';
 			$j++;
-			if($j == 16){
+			if($j == 10){
 				$k ++ ;
 				$j = 0;
 				$output .= '</ul>';

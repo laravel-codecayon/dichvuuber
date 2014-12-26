@@ -24,8 +24,8 @@ class Customer extends BaseModel  {
 	}
 
 	public static $rules=array(
-			"username" => "required|alpha_num|between:5,15|unique:customer",
-			"name" => "required|between:5,15",
+			"username" => "required|alpha_num|between:5,20|unique:customer",
+			"name" => "required|between:5,50",
 			"phone" => "required|Numeric",
 			"email" => "required|email|unique:customer",
 			"password" => "required|alpha_num|between:5,20",

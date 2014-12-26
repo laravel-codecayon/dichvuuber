@@ -124,6 +124,7 @@ required >{{ $row['content'] }}</textarea>
 			editor_selector : "mceEditor",
 			 plugins : "openmanager",
 			 file_browser_callback: "openmanager",
+			 theme_advanced_buttons3 : "forecolor , backcolor ,forecolorpicker, backcolorpicker , fontselect, fontsizeselect ",
 			 open_manager_upload_path: '../../../../../../../../uploads/images/',
 		 });	
 	});
